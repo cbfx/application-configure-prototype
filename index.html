@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <title>Canon Starter Template</title>
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" type="text/css" href="https://eafdbc63c97ce6bec9ef-b0a668e5876bef6fe25684caf71db405.ssl.cf1.rackcdn.com/v1-latest/canon.min.css">
+  <link rel="stylesheet" type="text/css" href="/styles/application-configure.css">
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body class="rs-responsive" ng-app="app" ng-controller="ConfigureCtrl">
+  <div class="rs-wrapper">
+    <div class="rs-nav-utility">
+      <div class="rs-container">
+        <ul class="rs-nav rs-pull-right">
+          <li class="rs-nav-item"><a class="rs-nav-link" href="#">Account: Username123</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rs-nav-primary">
+      <div class="rs-container">
+        <div class="rs-nav-brand">
+          <a href="index.html"></a>
+        </div>
+        <ul class="rs-nav">
+          <li><a href="#">Link One</a></li>
+          <li><a href="#">Link Two</a></li>
+          <li><a href="#">Link Three</a></li>
+          <li><a href="#">Link Four</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rs-body">
+      <ng-include src="'/scripts/app/applications/applications-configure.tpl.html'"></ng-include>
+    </div>
+    <div class="rs-push"></div>
+  </div>
+  <div class="rs-nav-footer">
+    <div class="rs-container">
+      <ul class="rs-nav">
+        <li class="rs-nav-item">&copy; Rackspace, US</li>
+        <li class="rs-nav-item"><a class="rs-nav-link" href="http://www.rackspace.com/information/legal/websiteterms" target="blank">Website Terms</a>
+        <li class="rs-nav-item"><a class="rs-nav-link" href="http://www.rackspace.com/information/legal/privacystatement" target="blank">Privacy Policy</a>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Drag and Drop -->
+  <script src="/scripts/app/app.js"></script>
+  <script src="http://logicbomb.github.io/ng-directives/script/lvl-uuid.js"></script>
+  <script src="http://logicbomb.github.io/ng-directives/script/lvl-drag-drop.js"></script>
+
+  <!-- App -->
+  <script src="/scripts/common/services/blueprint.js"></script>
+  <script src="/scripts/common/services/catalog.js"></script>
+  <script src="/scripts/common/services/drag.js"></script>
+  <script src="/scripts/app/applications/applications-configure.js"></script>
+  <script src="/scripts/app/applications/applications.js"></script>
+  <script src="/scripts/app/app.js"></script>
+</body>
+</html>

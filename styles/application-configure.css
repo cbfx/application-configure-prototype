@@ -1,0 +1,197 @@
+/* canon override */
+/*body.rs-responsive .rs-container {
+  padding: 0;
+}
+
+.rs-main .rs-sidebar+.rs-content {
+  padding: 0;
+}
+.rs-main .rs-inner {
+  margin: 0;
+}*/
+
+/* application launching */
+.waldo-launch-container {
+  margin: 0;
+  position: fixed;
+  top: 120px;
+  left: 40px;
+  right: 40px;
+  bottom: 50px;  
+}
+
+.waldo-launch-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 290px;
+  background-color: rgba(255,255,255,1);
+  z-index: 999;
+}
+/* Sidebar Header */
+.waldo-launch-header {
+  padding: 20px;
+  position: relative;
+}
+.waldo-launch-search-bar {}
+.waldo-launch-search-bar input[type=text] {
+  width: 100%;
+  font-size: 13px;
+  height: 30px;
+  margin: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-color: rgba(100,100,100,.2);
+}
+.waldo-launch-search-bar input[type=text]:focus {}
+.waldo-launch-search-bar::after {
+  font-family: "FontAwesome";
+  content: "\f002";
+  color: #ccc;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  margin-top: -10px;
+  right: 30px;
+}
+
+/* List */
+.waldo-launch-list-container {
+  border-top: 1px solid #eee;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+.waldo-launch-list-section {}
+.waldo-launch-list-section h4 {
+  border-bottom: 1px solid #eee;
+  padding: 0 20px;
+  margin: 0;
+  line-height: 25px;
+  color: #c0c0c0;
+}
+.waldo-launch-list-item {
+  color: #666;
+  padding: 5px 20px;
+  display: block;
+  text-align: left;
+  position: relative;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+.waldo-launch-list-item:hover {
+/*  background-color: rgba(220,220,220,.1);*/
+}
+.waldo-list-item-icon, 
+.waldo-list-item-title {
+  display: inline-block;
+}
+.waldo-list-item-title {
+  font-size: 14px;
+  line-height: 24px;
+  color: #666;
+}
+.waldo-list-item-icon {
+  font-size: 16px;
+  margin-right: 10px;
+  color: #e9e9e9;
+}
+.waldo-list-item-icon i {
+  border: 2px solid #eee;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+/* topology area */
+.waldo-launch-empty-canvas {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  margin-top: -90px;
+  margin-left: -300px;
+}
+
+.waldo-launch-empty-title {
+  font-size: 22px;
+  color: #999;
+  margin-bottom: 8px;
+}
+.waldo-launch-empty-subtitle {
+  font-size: 14px;
+    color: #999;
+}
+.waldo-launch-empty-canvas .rs-table-overlay-content::before {
+  font-family: "FontAwesome";
+  content: "\f047";
+  font-size: 80px;
+  color: #ccc;
+  top: -60px;
+  position: relative;
+  border-radius: 10px;
+  padding: 20px; 
+  border: 5px solid #ccc;
+  opacity: .8;
+}
+
+.waldo-launch-topology {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 290px;
+  bottom: 0;
+  background-color: rgba(255,255,255,1);
+  overflow: hidden;
+}
+
+.waldo-launch-controls {
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  left: 0;
+  height: 25px;
+  padding: 15px;
+}
+
+/* drag and drop */
+.lvl-target {
+  background-color: #ddd;
+  opacity: .5;
+}
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+/*   cursor: move;*/
+}
+
+/* d3 */
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.link {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node {
+  cursor: move;
+  fill: #ccc;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node.fixed {
+  fill: #f00;
+}
