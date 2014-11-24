@@ -8,6 +8,8 @@ angular.module('applications-configure', [
 angular.module('applications-configure')
   .controller('ConfigureCtrl', function($scope, Blueprint, Catalog, Drag) {
 
+    $scope.blueprint = Blueprint.get();
+
     // This selects the object being sent to the Blueprint.
     $scope.select = function(app) {
       Drag.current.set(app);
@@ -15,6 +17,7 @@ angular.module('applications-configure')
     
     // This triggers when something is dropped on the drop target.
     $scope.add = function() {
+      console.log('add function called');
       var source = Drag.current.get();
       var target = Drag.target.get();
 
