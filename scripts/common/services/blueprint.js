@@ -19,7 +19,17 @@ angular.module('waldo.Blueprint')
         console.log('[Blueprint.sort()] service: ', service);
         console.log('[Blueprint.sort()] target: ', target);
 
-        this.data = {};
+        var serviceName = 'default';
+        if (service.is) {
+          serviceName = service.is;
+        }
+        if (typeof this.data.services === 'undefined') {
+          this.data.services = {};
+        }
+        this.data.services[serviceName] = {
+          components: [service.id]
+        };
+        console.log(this.data);
         this.broadcast();
       },
       broadcast: function() {
