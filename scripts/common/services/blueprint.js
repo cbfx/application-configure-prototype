@@ -41,12 +41,48 @@ angular.module('waldo.Blueprint')
   });
 
 angular.module('waldo.Blueprint')
-  .directive('blueprintTopology', function() {
+  .directive('blueprintZoom', function() {
+    return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+        var zoom = d3.behavior.zoom()
+          .scaleExtent([1, 8])
+          .on("zoom", zoomed);
+
+        var container = d3.select(element[0]).call(zoom);
+
+        function zoomed() {
+          container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+        }
+      }
+    };
+  });
+
+angular.module('waldo.Blueprint')
+  .factory('Layout', function() {
+    return { 
+      force: {
+        data: null,
+        set: function() {
+          this.data = d3.layout.force();
+          return this.data;
+        },
+        get: function() {
+          return this.data;
+        }
+      }
+    };
+  });
+
+angular.module('waldo.Blueprint')
+  .directive('blueprintTopology', function(Layout) {
     return {
       restrict: 'E',
       scope: {},
       controller: function($scope, $window, Blueprint) {
         $scope.$on('blueprint:update', function(event, data) {
+          $scope.blueprint = data;
+          $scope.$apply();
           console.log('[Blueprint topology]: blueprint broadcast caught in topology. we should render the topology.', data);
         });
 
@@ -54,9 +90,10 @@ angular.module('waldo.Blueprint')
           $scope.$broadcast('window:resize');
         });
       },
+      templateUrl: '/scripts/common/services/blueprint.tpl.html',
       link: function(scope, element, attrs) {
         // fake data
-        var graph = {
+        scope.graph = {
           "nodes": [
             {"x": 469, "y": 410},
             {"x": 493, "y": 364},
@@ -96,82 +133,30 @@ angular.module('waldo.Blueprint')
 
         var parent = angular.element(element).parent()[0];
 
-        var width = parent.clientWidth,
-            height = parent.clientHeight;
+        scope.width = parent.clientWidth;
+        scope.height = parent.clientHeight;
 
-        var zoom = d3.behavior.zoom()
-            .scaleExtent([1, 8])
-            .on("zoom", zoomed);
-
-        var force = d3.layout.force()
-            .size([width, height])
+        scope.force = Layout.force.set()
+            .size([scope.width, scope.height])
             .charge(-400)
-            .linkDistance(40)
-            .on("tick", tick);
+            .linkDistance(40);
 
-        var drag = force.drag()
-            .on("dragstart", dragstart);
-
-        var svg = d3.select(element[0]).append("svg")
-            .attr("width", width)
-            .attr("height", height);
-
-        var container = svg.append("g")
-                .call(zoom)
-                .append("g");
-
-        container.append("rect")
-          .attr("class", "overlay")
-          .attr("width", width)
-          .attr("height", height);
-
-        var link = container.selectAll(".link"),
-            node = container.selectAll(".node");
-
-        force
-            .nodes(graph.nodes)
-            .links(graph.links)
+        scope.force
+            .nodes(scope.graph.nodes)
+            .links(scope.graph.links)
+            .on("tick", tick)
             .start();
-
-        link = link.data(graph.links)
-          .enter().append("line")
-            .attr("class", "link");
-
-        node = node.data(graph.nodes)
-          .enter().append("circle")
-            .attr("class", "node")
-            .attr("r", 12)
-            .on("dblclick", dblclick)
-            .call(drag);
 
         scope.$on('window:resize', resize);
 
         function tick() {
-          link.attr("x1", function(d) { return d.source.x; })
-              .attr("y1", function(d) { return d.source.y; })
-              .attr("x2", function(d) { return d.target.x; })
-              .attr("y2", function(d) { return d.target.y; });
-
-          node.attr("cx", function(d) { return d.x; })
-              .attr("cy", function(d) { return d.y; });
-        }
-
-        function dblclick(d) {
-          //d3.select(this).classed("fixed", d.fixed = false);
-        }
-
-        function dragstart(d) {
-          d3.event.sourceEvent.stopPropagation();
-          d3.select(this).classed("fixed", d.fixed = true);
+          scope.$apply();
         }
 
         function resize() {
-          svg.attr("width", parent.clientWidth);
-          svg.attr("height", parent.clientHeight);
-        }
-
-        function zoomed() {
-          container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+          scope.width = parent.clientWidth;
+          scope.height = parent.clientHeight;
+          tick();
         }
       }
     };

@@ -34,9 +34,9 @@
          x-lvl-drop-target="true"
          x-on-drop="add()">  
 
-      <blueprint-topology></blueprint-topology>
+      <blueprint-topology ng-show="blueprint.services"></blueprint-topology>
 
-      <div class="rs-table-overlay waldo-launch-empty-canvas" ng-hide="true">
+      <div class="rs-table-overlay waldo-launch-empty-canvas" ng-hide="blueprint.services">
         <div class="rs-table-overlay-content">
           <div class="rs-table-overlay-title">You don't have any applications yet.</div>
           <div class="rs-table-overlay-subtitle">Add one now.</div>

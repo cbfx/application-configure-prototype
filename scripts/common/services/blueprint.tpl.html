@@ -1,0 +1,37 @@
+<!-- <svg ng-attr-width="{{width}}"
+     ng-attr-height="{{height}}">
+   <g blueprint-zoom>
+      <rect ng-attr-width="{{width}}"
+            ng-attr-height="{{height}}"
+            class="overlay">
+      </rect>
+      <g>
+        <line ng-repeat="link in graph.links"
+              class="link"
+              ng-attr-stroke-width="{{link.strokeWidth}}"
+              ng-attr-x1="{{link.source.x}}"
+              ng-attr-y1="{{link.source.y}}"
+              ng-attr-x2="{{link.target.x}}"
+              ng-attr-y2="{{link.target.y}}">
+        </line>
+        <circle ng-repeat="node in graph.nodes"
+                force-drag
+                class="node"
+                r="5"
+                ng-attr-fill="{{node.color}}"
+                ng-attr-cx="{{node.x}}"
+                ng-attr-cy="{{node.y}}">
+          <title>{{node.name}}</title>
+        </circle>
+      </g>
+   </g>
+</svg> -->
+{{blueprint}}
+<svg ng-attr-width="{{width}}"
+     ng-attr-height="{{height}}">
+  <g ng-repeat="layer in blueprint">
+    <rect ng-repeat="service in layer">
+    
+    </rect>
+  </g>
+</svg>
