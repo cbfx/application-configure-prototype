@@ -1,4 +1,6 @@
-angular.module('waldo.Blueprint', []);
+angular.module('waldo.Blueprint', [
+  //'ui.codemirror'
+]);
 angular.module('waldo.Blueprint')
   .factory('Blueprint', function($rootScope) {  
     return {
@@ -90,7 +92,7 @@ angular.module('waldo.Blueprint')
           $scope.$broadcast('window:resize');
         });
       },
-      templateUrl: '/scripts/common/services/blueprint.tpl.html',
+      templateUrl: '/scripts/common/services/blueprint-topology.tpl.html',
       link: function(scope, element, attrs) {
         // fake data
         scope.graph = {
