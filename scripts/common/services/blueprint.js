@@ -8,7 +8,7 @@ angular.module('waldo.Blueprint')
       },
       set: function(blueprint) {
         this.data = blueprint;
-        this.emit();
+        this.broadcast();
       },
       add: function(service, target) {
         // Add item to blueprint data.
@@ -16,14 +16,14 @@ angular.module('waldo.Blueprint')
       },
       sort: function(service, target) {
         // TODO: write logic that sorts in catalog object to blueprint model:
-        console.log(service);
-        console.log(target);
+        console.log('[Blueprint.sort()] service: ', service);
+        console.log('[Blueprint.sort()] target: ', target);
 
         this.data = {};
-        this.emit();
+        this.broadcast();
       },
-      emit: function() {
-        $rootScope.$emit('blueprint:update', this.data);
+      broadcast: function() {
+        $rootScope.$broadcast('blueprint:update', this.data);
       }
     };
   });
@@ -44,8 +44,8 @@ angular.module('waldo.Blueprint')
 
         });
 
-        $scope.$on('blueprint:update', function() {
-          console.log('blueprint emit caught in topology');
+        $scope.$on('blueprint:update', function(event, data) {
+          console.log('[Blueprint topology]: blueprint broadcast caught in topology. we should re-render the topology.', data);
         });
       },
       link: function(scope, element, attrs) {
