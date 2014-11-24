@@ -33,7 +33,7 @@ angular.module('applications-configure')
     };
 
     $scope.$on('blueprint:update', function(event, data) {
-      console.log('[ConfigureCtrl]: blueprint broadcast caught in config controller. we could use this to disable/enable nodes.', data);
+      console.log('[ConfigureCtrl]: blueprint broadcast caught in config controller. we could use this to disable/enable catalog nodes and render yaml/json.', data);
     });
 
   });
