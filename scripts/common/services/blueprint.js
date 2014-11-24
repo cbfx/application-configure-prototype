@@ -34,18 +34,12 @@ angular.module('waldo.Blueprint')
       restrict: 'E',
       scope: {},
       controller: function($scope, $window, Blueprint) {
+        $scope.$on('blueprint:update', function(event, data) {
+          console.log('[Blueprint topology]: blueprint broadcast caught in topology. we should render the topology.', data);
+        });
+
         $window.addEventListener('resize', function () {
           $scope.$broadcast('window:resize');
-        });
-
-        $scope.blueprint = Blueprint.get();
-
-        $scope.$watch('blueprint', function() {
-
-        });
-
-        $scope.$on('blueprint:update', function(event, data) {
-          console.log('[Blueprint topology]: blueprint broadcast caught in topology. we should re-render the topology.', data);
         });
       },
       link: function(scope, element, attrs) {
@@ -139,7 +133,6 @@ angular.module('waldo.Blueprint')
             .call(drag);
 
         scope.$on('window:resize', resize);
-        //scope.$watch('blueprint', update);
 
         function tick() {
           link.attr("x1", function(d) { return d.source.x; })
