@@ -15,7 +15,7 @@ angular.module('applications-configure')
     
     // This triggers when something is dropped on the drop target.
     $scope.add = function() {
-      console.log(Drag.current.get());
+      Blueprint.add(Drag.current.get(), Drag.target.get());
     };
 
     // This could toggle an extra sidebar to reveal details about a service.
@@ -27,4 +27,5 @@ angular.module('applications-configure')
     $scope.catalog = {
       'data': Catalog.get()
     };
+
   });

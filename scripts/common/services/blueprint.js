@@ -9,8 +9,14 @@ angular.module('waldo.Blueprint')
       set: function(blueprint) {
         this.data = blueprint;
       },
-      add: function(item) {
+      add: function(service, target) {
         // Add item to blueprint data.
+        this.sort(service, target);
+      },
+      sort: function(service, target) {
+        // TODO: write logic that sorts in catalog object to blueprint model:
+        console.log(service);
+        console.log(target);
       }
     };
   });
@@ -18,7 +24,7 @@ angular.module('waldo.Blueprint')
 angular.module('waldo.Blueprint')
   .directive('blueprintTopology', function() {
     return {
-      restrict: 'AE',
+      restrict: 'E',
       scope: {},
       controller: function($scope, $window, Blueprint) {
         $window.addEventListener('resize', function () {
