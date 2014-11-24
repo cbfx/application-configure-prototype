@@ -1,6 +1,6 @@
 angular.module('waldo.Blueprint', []);
 angular.module('waldo.Blueprint')
-  .factory('Blueprint', function() {  
+  .factory('Blueprint', function($rootScope) {  
     return {
       data: {},
       get: function() {
@@ -8,6 +8,7 @@ angular.module('waldo.Blueprint')
       },
       set: function(blueprint) {
         this.data = blueprint;
+        this.emit();
       },
       add: function(service, target) {
         // Add item to blueprint data.
@@ -17,6 +18,12 @@ angular.module('waldo.Blueprint')
         // TODO: write logic that sorts in catalog object to blueprint model:
         console.log(service);
         console.log(target);
+
+        this.data = {};
+        this.emit();
+      },
+      emit: function() {
+        $rootScope.$emit('blueprint:update', this.data);
       }
     };
   });
@@ -32,6 +39,14 @@ angular.module('waldo.Blueprint')
         });
 
         $scope.blueprint = Blueprint.get();
+
+        $scope.$watch('blueprint', function() {
+
+        });
+
+        $scope.$on('blueprint:update', function() {
+          console.log('blueprint emit caught in topology');
+        });
       },
       link: function(scope, element, attrs) {
         // fake data

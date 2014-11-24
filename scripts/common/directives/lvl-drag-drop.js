@@ -4,8 +4,6 @@ module.directive('lvlDraggable', ['$rootScope', 'uuid', function($rootScope, uui
       return {
           restrict: 'A',
           link: function(scope, el, attrs, controller) {
-            console.log("linking draggable element");
-
               angular.element(el).attr("draggable", "true");
               var id = angular.element(el).attr("id");
               if (!id) {
