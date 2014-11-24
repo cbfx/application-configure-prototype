@@ -15,21 +15,23 @@ angular.module('waldo.Blueprint')
         this.sort(service, target);
       },
       sort: function(service, target) {
-        // TODO: write logic that sorts in catalog object to blueprint model:
         console.log('[Blueprint.sort()] service: ', service);
         console.log('[Blueprint.sort()] target: ', target);
 
         var serviceName = 'default';
+
         if (service.is) {
           serviceName = service.is;
         }
+
         if (typeof this.data.services === 'undefined') {
           this.data.services = {};
         }
+
         this.data.services[serviceName] = {
           components: [service.id]
         };
-        console.log(this.data);
+
         this.broadcast();
       },
       broadcast: function() {
