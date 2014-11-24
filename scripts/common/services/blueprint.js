@@ -137,7 +137,7 @@ angular.module('waldo.Blueprint')
         }
 
         function dblclick(d) {
-          d3.select(this).classed("fixed", d.fixed = false);
+          //d3.select(this).classed("fixed", d.fixed = false);
         }
 
         function dragstart(d) {
