@@ -131,7 +131,7 @@ angular.module('ui.codemirror', [])
               }
             };
 
-          $timeout(deferCodeMirror);
+            $timeout(deferCodeMirror);
 
           };
         }

@@ -12,29 +12,45 @@ angular.module('waldo.Blueprint')
         this.data = blueprint;
         this.broadcast();
       },
-      add: function(service, target) {
+      add: function(component, target) {
         // Add item to blueprint data.
-        this.sort(service, target);
+        this.sort(component, target);
       },
-      sort: function(service, target) {
-        console.log('[Blueprint.sort()] service: ', service);
+      sort: function(component, target) {
+        console.log('[Blueprint.sort()] component: ', component);
         console.log('[Blueprint.sort()] target: ', target);
 
         var serviceName = 'default';
 
-        if (service.is) {
-          serviceName = service.is;
+        if (component.is) {
+          serviceName = component.is;
         }
 
         if (typeof this.data.services === 'undefined') {
           this.data.services = {};
         }
 
-        this.data.services[serviceName] = {
-          components: [service.id]
-        };
-
+        if (serviceName in this.data.services) {
+          if (!this.componentInService(component, serviceName)) {
+            this.addComponentToService(component, serviceName);
+          } else {
+            return;
+          }
+        } else {
+          this.addService(serviceName, component);
+        }
         this.broadcast();
+      },
+      componentInService: function(component, serviceName) {
+        return this.data.services && serviceName in this.data.services && this.data.services[serviceName].components.indexOf(component.id) > -1;
+      },
+      addComponentToService: function(component, serviceName) {
+        this.data.services[serviceName].components.push(component.id);
+      },
+      addService: function(serviceName, firstComponent) {
+        this.data.services[serviceName] = {
+          components: [firstComponent.id]
+        };
       },
       broadcast: function() {
         $rootScope.$broadcast('blueprint:update', this.data);
