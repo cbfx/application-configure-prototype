@@ -34,8 +34,10 @@
          x-lvl-drop-target="true"
          x-on-drop="add()">
 
-      <blueprint-topology ng-show="blueprint.services"></blueprint-topology>
-      <blueprint-codemirror ng-show="blueprint.services" class="waldo-launch-sidebar-right"></blueprint-codemirror>
+      <blueprint-topology></blueprint-topology>
+      <blueprint-codemirror ng-hide="true" ng-sshow="blueprint.services" 
+                            class="waldo-launch-sidebar align-right">
+      </blueprint-codemirror>
 
       <div class="rs-table-overlay waldo-launch-empty-canvas" ng-hide="blueprint.services">
         <div class="rs-table-overlay-content">

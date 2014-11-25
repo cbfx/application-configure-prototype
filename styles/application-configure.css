@@ -20,8 +20,7 @@
   bottom: 50px;  
 }
 
-.waldo-launch-sidebar,
-.waldo-launch-sidebar-right {
+.waldo-launch-sidebar {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -33,12 +32,13 @@
   background-color: rgba(255,255,255,1);
   
 }
-.waldo-launch-sidebar-right {
+.waldo-launch-sidebar.align-right {
   right: 0;
+  left: auto;
   width: 600px;
   background-color: rgba(0,0,0,.8);
 }
-.waldo-launch-sidebar-right.hidden {
+.waldo-launch-sidebar.align-right.hidden {
   right: -600px;
 }
 
@@ -184,10 +184,14 @@
   -khtml-user-select: none;
   -webkit-user-select: none;
   user-select: none;
-/*   cursor: move;*/
+/*   cursor: move;*/85b1b1e0-d89d-7749-c3c3-61487e48a9d2
 }
 
 /* d3 */
+.blueprint-topology {
+  position: relative;
+  z-index: 700;
+}
 .overlay {
   fill: none;
   pointer-events: all;
@@ -207,4 +211,10 @@
 
 .node.fixed {
   fill: #f00;
+}
+
+/* code mirror */
+.cm-s-lesser-dark.CodeMirror,
+.cm-s-lesser-dark .CodeMirror-gutters {
+  background: transparent !important;
 }

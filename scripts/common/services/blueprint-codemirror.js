@@ -73,7 +73,7 @@ angular.module('waldo.Blueprint')
         $scope.$on('blueprint:update', function(event, data) {
           $scope.codemirror.setData(data);
           $scope.$apply();
-          console.log('[Blueprint codemirror]: blueprint broadcast caught in topology. we should render the topology.', data);
+          // console.log('[Blueprint codemirror]: blueprint broadcast caught in topology. we should render the topology.', data);
         });
       }
     };
