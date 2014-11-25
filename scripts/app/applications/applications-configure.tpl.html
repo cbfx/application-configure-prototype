@@ -29,13 +29,13 @@
 
       </div> <!-- /.waldo-launch-list-container -->
     </div> <!-- /.waldo-launch-sidebar -->
-     
+
     <div class="waldo-launch-topology"
          x-lvl-drop-target="true"
-         x-on-drop="add()">  
+         x-on-drop="add()">
 
       <blueprint-topology ng-show="blueprint.services"></blueprint-topology>
-      <blueprint-codemirror ng-show="blueprint.services"></blueprint-codemirror>
+      <blueprint-codemirror ng-show="blueprint.services" class="waldo-launch-sidebar-right"></blueprint-codemirror>
 
       <div class="rs-table-overlay waldo-launch-empty-canvas" ng-hide="blueprint.services">
         <div class="rs-table-overlay-content">

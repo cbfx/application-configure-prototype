@@ -9,6 +9,7 @@
   <link rel="stylesheet" type="text/css" href="/libs/codemirror-4.8/lib/codemirror.css">
   <link rel="stylesheet" type="text/css" href="/libs/codemirror-4.8/addon/lint/lint.css">
   <link rel="stylesheet" type="text/css" href="/libs/codemirror-4.8/addon/fold/foldgutter.css">
+  <link rel="stylesheet" type="text/css" href="/libs/codemirror-4.8/theme/lesser-dark.css">
 
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -55,19 +56,24 @@
   </div>
 
   <!-- Libs -->
-  <script src="/libs/js-yaml.js"></script>
   <script src="/libs/yaml.js"></script>
 
+  <!-- load before codemirror YAML linter -->
+  <script src="/libs/js-yaml.js"></script>
+
   <script src="/libs/codemirror-4.8/lib/codemirror.js"></script>
+  <script src="/libs/codemirror-4.8/mode/yaml/yaml.js"></script>
+  <script src="/libs/codemirror-4.8/mode/javascript/javascript.js"></script>
   <script src="/libs/codemirror-4.8/addon/fold/foldcode.js"></script>
+  <script src="/libs/codemirror-4.8/addon/fold/foldgutter.js"></script>
   <script src="/libs/codemirror-4.8/addon/fold/brace-fold.js"></script>
   <script src="/libs/codemirror-4.8/addon/fold/indent-fold.js"></script>
   <script src="/libs/codemirror-4.8/addon/fold/markdown-fold.js"></script>
-  <script src="/libs/codemirror-4.8/addon/fold/foldgutter.js"></script>
+  <script src="/libs/codemirror-4.8/addon/fold/comment-fold.js"></script>
   <script src="/libs/codemirror-4.8/addon/lint/lint.js"></script>
   <script src="/libs/codemirror-4.8/addon/lint/json-lint.js"></script>
   <script src="/libs/codemirror-4.8/addon/lint/yaml-lint.js"></script>
-  <script src="/libs/ui-codemirror-0.1.6/ui-codemirror.js"></script>
+  <script src="/libs/ui-codemirror.js"></script>
 
   <!-- Drag and Drop -->
   <script src="/scripts/app/app.js"></script>
