@@ -1,8 +1,8 @@
 angular.module('waldo.Blueprint', [
-  //'ui.codemirror'
+  'ui.codemirror'
 ]);
 angular.module('waldo.Blueprint')
-  .factory('Blueprint', function($rootScope) {  
+  .factory('Blueprint', function($rootScope) {
     return {
       data: {},
       get: function() {
@@ -62,7 +62,7 @@ angular.module('waldo.Blueprint')
 
 angular.module('waldo.Blueprint')
   .factory('Layout', function() {
-    return { 
+    return {
       force: {
         data: null,
         set: function() {
