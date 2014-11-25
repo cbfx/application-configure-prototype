@@ -2,71 +2,71 @@ angular.module('waldo.Blueprint')
   .directive('blueprintCodemirror', function() {
     return {
       restrict: 'E',
-      scope: {},
-      templateUrl: '/scripts/common/services/blueprint-codemirror.tpl.html',
+      replace: true,
+      template: '<ui-codemirror ui-codemirror-opts="codemirror.options" ng-model="codemirror.data.bound"></ui-codemirror>',
       controller: function($scope) {
-
-        $scope.toggleEditorType = function() {
-          var currentMode = $scope.codemirror.options.mode;
-          try {
-            if (currentMode === 'application/json') {
-              $scope.toJSON();
-            } else {
-              $scope.toYAML();
-            }
-          } catch(err) {
-            $scope.show_error(err);
-          }
-        };
 
         $scope.codemirror = {
           format: 'yaml',
-          onLoaded: function(_editor){
-            _editor.eachLine(function(line){
-              if(line.text.substring(0,3) == '  "') {
-                $scope.foldFunc(_editor, _editor.getLineNumber(line));
-              }
-            });
-          },
-          foldFunc: CodeMirror.newFoldFunction(CodeMirror.fold.brace),
-          options: {
-            onLoad: this.onLoaded,
-            theme: 'lesser-dark',
-            mode: {name: 'javascript', json: true },
-            lineNumbers: true,
-            autoFocus: true,
-            lineWrapping: true,
-            dragDrop: false,
-            lint: false,
-            matchBrackets: true,
-            onGutterClick: this.foldFunc
-          },
-          refresh: function() {
-            if ($scope.codemirror.format === 'yaml') {
-              $scope.codemirror.data.toYAML();
-            } else {
-              $scope.codemirror.data.toJSON();
-            }
+          indentFoldfunc: CodeMirror.newFoldFunction(CodeMirror.fold.indent),
+          braceFoldFunc: CodeMirror.newFoldFunction(CodeMirror.fold.brace),
+          currentFoldFunc: this.indentFoldfunc,
+          onLoad: function(_editor){
+            $scope.codemirror.editor = _editor;
           },
           data: {
             original: undefined,
             bound: '',
             toYAML: function() {
+              $scope.codemirror.options.mode = 'yaml';
+              $scope.codemirror.options.lint = typeof CodeMirror.lint.yaml !== 'undefined';
               $scope.codemirror.data.bound = jsyaml.safeDump($scope.codemirror.data.original) || '';
-              $scope.codemirror.options.mode = 'application/x-yaml';
-              $scope.codemirror.foldFunc = CodeMirror.newFoldFunction(CodeMirror.fold.indent);
-              $scope.codemirror.options.lint = true;
+              $scope.codemirror.options.onGutterClick = $scope.codemirror.indentFoldFunc;
             },
             toJSON: function() {
-              $scope.codemirror.data.bound = JSON.stringify($scope.codemirror.data, null, 2);
-              $scope.codemirror.options.mode = 'application/json';
-              $scope.codemirror.foldFunc = CodeMirror.newFoldFunction(CodeMirror.fold.brace) || '';
-              $scope.codemirror.options.lint = true;
+              $scope.codemirror.options.mode = 'json';
+              $scope.codemirror.options.lint = typeof CodeMirror.lint.json !== 'undefined';
+              $scope.codemirror.data.bound = JSON.stringify($scope.codemirror.data.original, null, 2);
+              $scope.codemirror.options.onGutterClick = $scope.codemirror.braceFoldFunc;
+            }
+          },
+          onUpdate: function() {
+            if ($scope.codemirror.format === 'yaml') {
+              $scope.codemirror.data.toYAML();
+            } else {
+              $scope.codemirror.data.toJSON();
+            }
+            if ($scope.codemirror.editor) {
+              $scope.codemirror.editor.refresh();
+              //$scope.codemirror.editor.eachLine(function(line){
+              //  if(line.text.substring(0, 3) == '  "') {
+              //    $scope.codemirror.indentFoldfunc($scope.codemirror.editor, $scope.codemirror.editor.getLineNumber(line));
+              //  }
+              //});
+              $scope.codemirror.options.lint = $scope.codemirror.data.bound.length > 0;
+
             }
           },
           setData: function(data) {
             $scope.codemirror.data.original = data;
-            $scope.codemirror.refresh();
+            $scope.codemirror.onUpdate();
+          },
+          options: {
+            lint: false,
+            mode: 'yaml',
+            theme: 'lesser-dark',
+            lineNumbers: true,
+            autoFocus: true,
+            lineWrapping: true,
+            dragDrop: false,
+            matchBrackets: true,
+            foldGutter: true,
+            extraKeys: {"Ctrl-Q": function(cm){ cm.foldCode(cm.getCursor()); }},
+            gutters: ['CodeMirror-lint-markers','CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+            onGutterClick: CodeMirror.newFoldFunction(CodeMirror.fold.indent),
+            onLoad: function(_editor){
+              $scope.codemirror.onLoad(_editor);
+            }
           }
         };
 
