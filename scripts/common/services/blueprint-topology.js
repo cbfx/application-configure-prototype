@@ -216,7 +216,14 @@ angular.module('waldo.Blueprint')
 
               return 'translate('+x+','+y+')';
             })
-            .attr('xlink:href', 'https://mdn.mozillademos.org/files/2917/fxlogo.png')
+            .attr('xlink:href', function(d) {
+              // To Ziad: this will fail if there is no meta-info or display-hints... :(
+              if(d['meta-info']['display-hints']['icon-20x20']) {
+                return d['meta-info']['display-hints']['icon-20x20'];
+              }
+
+              return 'https://mdn.mozillademos.org/files/2917/fxlogo.png';
+            })
             .attr('class', 'component-icon');
 
           // This adds a component label.
