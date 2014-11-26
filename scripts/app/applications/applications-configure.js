@@ -6,7 +6,7 @@ angular.module('applications-configure', [
 ]);
 
 angular.module('applications-configure')
-  .controller('ConfigureCtrl', function($scope, Blueprint, Catalog, Drag) {
+  .controller('ConfigureCtrl', function($scope, Blueprint, Catalog, Drag, $timeout) {
 
     $scope.blueprint = Blueprint.get();
 
@@ -29,10 +29,21 @@ angular.module('applications-configure')
 
     // This is the catalog model for the sidebar.
     $scope.catalog = {
+      'isVisible': false,
       'data': Catalog.get()
     };
 
+    // This is the codemirror model for the sidebar.
+    $scope.codemirror = {
+    };
+
     $scope.$on('blueprint:update', function(event, data) {
+      if(_.size(data.services) === 1) {
+        $timeout(function() {
+          $scope.codemirror.isVisible = true;
+        }, 50);
+      }
+
       $scope.blueprint = data;
     });
   });
