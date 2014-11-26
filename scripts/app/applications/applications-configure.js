@@ -40,7 +40,7 @@ angular.module('applications-configure')
     };
 
     $scope.$on('deployment:update', function(event, data) {
-      if(_.size(data.services) === 1) {
+      if(data.blueprint && _.size(data.blueprint.services) === 1) {
         $timeout(function() {
           $scope.codemirror.isVisible = true;
         }, 50);

@@ -1,5 +1,5 @@
 angular.module('waldo.Deployment')
-  .directive('deploymentCodemirror', function(Deployment, $timeout) {
+  .directive('deploymentEditor', function(Deployment, $timeout) {
     return {
       restrict: 'E',
       replace: true,

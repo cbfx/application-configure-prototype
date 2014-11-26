@@ -8,9 +8,7 @@ var defaultBlueprint = {
   }
 };
 
-angular.module('waldo.Blueprint', [
-  'ui.codemirror'
-]);
+angular.module('waldo.Blueprint', []);
 angular.module('waldo.Blueprint')
   .factory('Blueprint', function($rootScope) {
     return {
