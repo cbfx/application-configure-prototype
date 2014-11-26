@@ -35,6 +35,25 @@ angular.module('waldo.Blueprint')
           this.data.services = {};
         }
 
+        // disabling this for now: this.addComponent(component, serviceName);
+        this.addComponentSingletons(component, serviceName);
+
+        this.broadcast();
+      },
+      addComponentSingletons: function(component, serviceName) {  // Add each component in its own service
+        if (serviceName in this.data.services) {
+          // disabling this for now: this.addComponentToService(component, serviceName);
+          for(var i=2;i<25;i++) {
+             if (!this.componentInService(component, serviceName + i)) {
+              this.addService(serviceName + i, component);
+              break;
+            }
+          }
+        } else {
+          this.addService(serviceName, component);
+        }
+      },
+      addComponent: function(component, serviceName) { // Add each component allowing more than on in a service
         if (serviceName in this.data.services) {
           if (!this.componentInService(component, serviceName)) {
             this.addComponentToService(component, serviceName);
@@ -44,7 +63,6 @@ angular.module('waldo.Blueprint')
         } else {
           this.addService(serviceName, component);
         }
-        this.broadcast();
       },
       componentInService: function(component, serviceName) {
         return this.data.services && serviceName in this.data.services && this.data.services[serviceName].components.indexOf(component.id) > -1;
