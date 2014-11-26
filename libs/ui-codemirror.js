@@ -90,6 +90,7 @@ angular.module('ui.codemirror', [])
             //Although the formatter have already done this, it can be possible that another formatter returns undefined (for example the required directive)
             var safeViewValue = ngModel.$viewValue || '';
             codeMirror.setValue(safeViewValue);
+            scope.$emit('editor:refreshed', codeMirror, safeViewValue);
           };
 
 
