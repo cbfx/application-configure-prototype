@@ -252,6 +252,30 @@ angular.module('waldo.Blueprint')
             })
             .attr('class', 'component-icon');
 
+          var linker = component.append('g')
+            .attr('class', 'relation-linker');
+
+          linker.append('circle')
+            .attr('r', 12)
+            .attr('fill', '#f6f6f6')
+            .attr('cx', function(d, index) {
+              return sizes.service.margin.left + (sizes.component.width() * (index + 1)) - 18;
+            })
+            .attr('cy', function(d, index) {
+              return sizes.component.height() - 7;
+            })
+            .attr('class', 'relation-link-container');
+
+          linker.append('text')
+            .html('&#xf0c1')
+            .attr('x', function(d, index) {
+              return sizes.service.margin.left + (sizes.component.width() * (index + 1)) - 24;
+            })
+            .attr('y', function(d, index) {
+              return sizes.component.height() - 2;
+            })
+            .attr('class', 'fa-link relation-linker-icon');
+
           // This adds a component label.
           var label = component.append('text')
             .attr('class', 'component-title');
@@ -321,15 +345,22 @@ angular.module('waldo.Blueprint')
             services: {}
           };
 
+          // This loops over the svg's services and converts it to an object.
           services.each(function(d) {
-            var _service = {
-              'components': d.components,
-              'annotations': {
-                'gui-x': Number(d.x.toFixed(3)),
-                'gui-y': Number(d.y.toFixed(3))
-              }
+            var _service = angular.copy(d);
+
+            // This removes svg-related properties.
+            delete _service._id;
+            delete _service.x;
+            delete _service.y;
+
+            // This adds annotations property.
+            _service.annotations = {
+              'gui-x': Number(d.x.toFixed(3)),
+              'gui-y': Number(d.y.toFixed(3))
             };
 
+            // This extends any current
             blueprint.services[d._id] = blueprint.services[d._id] || {};
             _.extend(blueprint.services[d._id], _service);
           });
