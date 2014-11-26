@@ -35,7 +35,7 @@
 .waldo-launch-sidebar.align-right {
   right: 0;
   left: auto;
-  width: 600px;
+  width: 300px;
   background-color: rgba(0,0,0,.8);
 }
 .waldo-launch-sidebar.align-right.hidden {
@@ -171,6 +171,8 @@
   left: 0;
   height: 25px;
   padding: 15px;
+  z-index: 900;
+  background-color: #fff;
 }
 
 /* drag and drop */
@@ -218,7 +220,19 @@
 }
 
 /* code mirror */
+.CodeMirror {
+  border: 1px solid #eee;
+  height: 100%;
+}
+.CodeMirror-scroll {
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
 .cm-s-lesser-dark.CodeMirror,
 .cm-s-lesser-dark .CodeMirror-gutters {
-  background: transparent !important;
+  background: transparent;
+}
+.cm-s-lesser-dark .CodeMirror-gutters {
+  border-right: 1px solid #555;
 }
