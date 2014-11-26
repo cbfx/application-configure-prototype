@@ -9,7 +9,7 @@ angular.module('waldo.Blueprint')
         return this.data;
       },
       set: function(blueprint) {
-        this.data = blueprint;
+        this.data = angular.copy(blueprint);
         this.broadcast();
       },
       add: function(component, target) {
@@ -46,6 +46,7 @@ angular.module('waldo.Blueprint')
       },
       addService: function(serviceName, firstComponent) {
         this.data.services[serviceName] = {
+          annotations: {},
           components: [firstComponent.id]
         };
       },

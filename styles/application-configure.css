@@ -17,7 +17,7 @@
   top: 120px;
   left: 40px;
   right: 40px;
-  bottom: 50px;  
+  bottom: 50px;
 }
 
 .waldo-launch-sidebar {
@@ -30,7 +30,7 @@
   left: 0;
   width: 290px;
   background-color: rgba(255,255,255,1);
-  
+
 }
 .waldo-launch-sidebar.align-right {
   right: 0;
@@ -101,7 +101,7 @@
 .waldo-launch-list-item:hover {
 /*  background-color: rgba(220,220,220,.1);*/
 }
-.waldo-list-item-icon, 
+.waldo-list-item-icon,
 .waldo-list-item-title {
   display: inline-block;
 }
@@ -149,7 +149,7 @@
   top: -60px;
   position: relative;
   border-radius: 10px;
-  padding: 20px; 
+  padding: 20px;
   border: 5px solid #ccc;
   opacity: .8;
 }
@@ -197,20 +197,24 @@
   pointer-events: all;
 }
 
-.link {
-  stroke: #000;
-  stroke-width: 1.5px;
+.service-title tspan {
+  font-size: 10px;
+  fill: #999;
+  font-weight: bold;
 }
 
-.node {
-  cursor: move;
-  fill: #ccc;
-  stroke: #000;
-  stroke-width: 1.5px;
+.component-title tspan {
+  font-size: 19px;
+  fill: #666;
+  font-weight: 100;
+  letter-spacing: .04em;
 }
 
-.node.fixed {
-  fill: #f00;
+.service-container,
+.component-container {
+  fill: #fff;
+  stroke: #ccc;
+  stroke-width: 1
 }
 
 /* code mirror */

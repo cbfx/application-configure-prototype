@@ -14,7 +14,7 @@ angular.module('applications-configure')
     $scope.select = function(app) {
       Drag.current.set(app);
     };
-    
+
     // This triggers when something is dropped on the drop target.
     $scope.add = function() {
       var source = Drag.current.get();
@@ -25,17 +25,14 @@ angular.module('applications-configure')
     };
 
     // This could toggle an extra sidebar to reveal details about a service.
-    $scope.viewDetails = function() {
+    $scope.viewDetails = function() {};
 
-    };
-    
     // This is the catalog model for the sidebar.
     $scope.catalog = {
       'data': Catalog.get()
     };
 
     $scope.$on('blueprint:update', function(event, data) {
-      // console.log('[ConfigureCtrl]: blueprint broadcast caught in config controller. we could use this to disable/enable catalog nodes and render yaml/json.', data);
+      $scope.blueprint = data;
     });
-
   });
