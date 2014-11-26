@@ -2,13 +2,15 @@ angular.module('applications-configure', [
   'lvl.directives.dragdrop',
   'waldo.Blueprint',
   'waldo.Catalog',
+  'waldo.Deployment',
   'waldo.Drag'
 ]);
 
 angular.module('applications-configure')
-  .controller('ConfigureCtrl', function($scope, Blueprint, Catalog, Drag, $timeout) {
+  .controller('ConfigureCtrl', function($scope, Deployment, Blueprint, Catalog, Drag, $timeout) {
 
-    $scope.blueprint = Blueprint.get();
+    $scope.deployment = Deployment.get();
+    $scope.blueprint = $scope.deployment.blueprint;
 
     // This selects the object being sent to the Blueprint.
     $scope.select = function(app) {
@@ -37,13 +39,14 @@ angular.module('applications-configure')
     $scope.codemirror = {
     };
 
-    $scope.$on('blueprint:update', function(event, data) {
+    $scope.$on('deployment:update', function(event, data) {
       if(_.size(data.services) === 1) {
         $timeout(function() {
           $scope.codemirror.isVisible = true;
         }, 50);
       }
 
-      $scope.blueprint = data;
+      $scope.deployment = data;
+      $scope.blueprint = data.blueprint;
     });
   });
