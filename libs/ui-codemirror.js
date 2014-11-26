@@ -18,6 +18,8 @@ angular.module('ui.codemirror', [])
         throw new Error('ui-codemirror need CodeMirror to work... (o rly?)');
       }
 
+      var events = ["cursorActivity", "viewportChange", "gutterClick", "focus", "blur", "scroll", "update"];
+
       return function postLink(scope, iElement, iAttrs, ngModel) {
 
 
@@ -55,6 +57,17 @@ angular.module('ui.codemirror', [])
               }
             });
           }, true);
+        }
+
+        for (var i = 0, n = events.length, aEvent; i < n; ++i) {
+          aEvent = opts["on" + events[i].charAt(0).toUpperCase() + events[i].slice(1)];
+          if (aEvent === void 0) {
+            continue;
+          }
+          if (typeof aEvent !== "function") {
+            continue;
+          }
+          codeMirror.on(events[i], aEvent);
         }
 
         if (ngModel) {
