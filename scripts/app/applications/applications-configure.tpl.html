@@ -1,6 +1,6 @@
 <div class="rs-container">
   <div class="waldo-launch-container rs-panel">
-    <div class="waldo-launch-sidebar">
+    <div class="waldo-launch-sidebar stick-left" ng-class="{'visible': catalog.data}">
       <header class="waldo-launch-header">
         <div class="waldo-launch-input waldo-launch-search-bar">
           <input type="text" ng-model="search" placeholder="Search Application Catalog..">
@@ -37,9 +37,22 @@
          x-lvl-drop-target="true"
          x-on-drop="add()">
 
+      <!-- Topology -->
       <blueprint-topology></blueprint-topology>
+
+      <!-- Code Mirror -->
+      <div class="codemirror-toggle-button"
+           ng-class="{'adjusted': codemirror.isVisible}"
+           ng-show="blueprint.services"
+           ng-click="codemirror.isVisible = !codemirror.isVisible">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-ban fa-stack-2x text-danger" ng-show="codemirror.isVisible"></i>
+          <i class="fa fa-code fa-stack-1x" ng-class="{'fa-inverse': codemirror.isVisible}"></i>
+        </span>
+      </div>
       <blueprint-codemirror ng-show="blueprint.services"
-                            class="waldo-launch-sidebar align-right">
+                            class="waldo-launch-sidebar stick-right"
+                            ng-class="{'visible': codemirror.isVisible}">
       </blueprint-codemirror>
 
       <div class="rs-table-overlay waldo-launch-empty-canvas" ng-hide="blueprint.services">
@@ -50,7 +63,7 @@
         </div>
       </div>
 
-      <div class="waldo-launch-controls">
+      <div class="waldo-launch-controls" ng-class="{'adjusted': codemirror.isVisible}">
         <div class="rs-btn-group rs-pull-right">
           <button class="rs-btn rs-btn-primary">Finalize Configuration</button>
           <button class="rs-btn rs-btn-link">Reset</button>
