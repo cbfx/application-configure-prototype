@@ -35,8 +35,6 @@ angular.module('waldo.Blueprint')
               //    $scope.codemirror.indentFoldfunc($scope.codemirror.editor, $scope.codemirror.editor.getLineNumber(line));
               //  }
               //});
-              $scope.codemirror.options.lint = $scope.codemirror.data.bound.length > 0;
-
             }
           },
           setData: function(data) {
@@ -64,19 +62,17 @@ angular.module('waldo.Blueprint')
 
         $scope.codemirror.data.toYAML();
 
-        $scope.$on('blueprint:update', function(event, data) {
-          if (data !== $scope.codemirror.data.blueprint) {
-            $scope.codemirror.setData(data);
-            $scope.$apply();
-          }
-          console.log('[Blueprint codemirror]: blueprint broadcast caught in topology. we should render the topology.', data);
+        $scope.$on('code:changed', function(event, data) {
+          Blueprint.set(data);
         });
 
-        $scope.$watch('codemirror.data.blueprint', function(newVal, oldVal) {
-          if(newVal !== oldVal) {
-            Blueprint.set(newVal);
+        $scope.$on('blueprint:update', function(event, data) {
+          if (data != $scope.codemirror.data.blueprint) {
+            $scope.codemirror.setData($.extend(true, {}, data));
+            $scope.$apply();
           }
         });
+
       }
     };
   });

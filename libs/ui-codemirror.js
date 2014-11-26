@@ -104,8 +104,7 @@ angular.module('ui.codemirror', [])
                 }
               };
 
-              // Keep the ngModel in sync with changes from CodeMirror
-              codeMirror.on('change', function (instance) {
+              scope.changeHandler = function(instance) {
                 var newValue = instance.getValue();
                 var parsedValue;
                 if (instance.options.mode === 'yaml') {
@@ -116,14 +115,22 @@ angular.module('ui.codemirror', [])
                   throw new Error('ui-codemirror can only have an object as a model if it is in yaml or json model (current mode is ' + codeMirror.options.mode + '\')');
                 }
 
-                if (newValue !== ngModel.$viewValue) {
+                if (parsedValue != ngModel.$modelValue) {
                   // Changes to the model from a callback need to be wrapped in $apply or angular will not notice them
                   scope.$apply(function() {
-                    ngModel.$setViewValue(parsedValue);
+                    ngModel.$setViewValue(parsedValue);  //Bad name; this set the model value
+                    scope.$emit('code:changed', parsedValue);
                   })
                 } else {
                   scope.$apply();
                 }
+              }
+              // Keep the ngModel in sync with changes from CodeMirror
+              codeMirror.on('keyup', scope.changeHandler);
+              codeMirror.on('contextmenu', scope.changeHandler);
+              codeMirror.on('drop', scope.changeHandler);
+              codeMirror.on('redraw', function() {
+                $scope.apply();
               });
             }
 
