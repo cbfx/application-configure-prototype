@@ -10,7 +10,7 @@ angular.module('waldo.Blueprint')
         $scope.imageMap = {
             icons: {},
             tattoos: {}
-        }
+        };
 
         $scope.getIcon = function(componentId) {
             return $scope.imageMap.icons[componentId] || '';
