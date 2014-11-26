@@ -73,8 +73,20 @@ angular.module('ui.codemirror', [])
               ngModel.$formatters.push(function (value) {
                 if (angular.isUndefined(value) || value === null) {
                   return '';
-                } else if (angular.isObject(value) || angular.isArray(value)) {
-                  throw new Error('ui-codemirror cannot use an object or an array as a model');
+                } else if (angular.isArray(value)) {
+                  if (codeMirror.options.mode === 'yaml') {
+                    return jsyaml.safeDump(value) || '';
+                  } else {
+                    throw new Error('ui-codemirror can only use an array as a model in yaml mode (current mode is ' + codeMirror.options.mode + '\')');
+                  }
+                } else if (angular.isObject(value)) {
+                  if (codeMirror.options.mode === 'yaml') {
+                    return jsyaml.safeDump(value) || '';
+                  } else if (codeMirror.options.mode === 'json') {
+                    return JSON.stringify(value, null, 2) || '';
+                  } else {
+                    throw new Error('ui-codemirror can only have an object as a model if it is in yaml or json model (current mode is ' + codeMirror.options.mode + '\')');
+                  }
                 }
                 return value;
               });
@@ -85,31 +97,32 @@ angular.module('ui.codemirror', [])
                 //Code mirror expects a string so make sure it gets one
                 //Although the formatter have already done this, it can be possible that another formatter returns undefined (for example the required directive)
                 var safeViewValue = ngModel.$viewValue || '';
-                codeMirror.setValue(safeViewValue);
+                if (codeMirror) {
+                  codeMirror.setValue(safeViewValue);
+                } else {
+                  initialTextValue = safeViewValue;
+                }
               };
 
               // Keep the ngModel in sync with changes from CodeMirror
               codeMirror.on('change', function (instance) {
                 var newValue = instance.getValue();
+                var parsedValue;
+                if (instance.options.mode === 'yaml') {
+                  parsedValue = jsyaml.load(newValue);
+                } else if (codeMirror.options.mode === 'json') {
+                  parsedValue = JSON.parse(newValue);
+                } else {
+                  throw new Error('ui-codemirror can only have an object as a model if it is in yaml or json model (current mode is ' + codeMirror.options.mode + '\')');
+                }
+
                 if (newValue !== ngModel.$viewValue) {
                   // Changes to the model from a callback need to be wrapped in $apply or angular will not notice them
-                  scope.$apply(function () {
-                    ngModel.$setViewValue(newValue);
-                  });
-                }
-                if (!scope.$$phase) {
+                  scope.$apply(function() {
+                    ngModel.$setViewValue(parsedValue);
+                  })
+                } else {
                   scope.$apply();
-                }
-              });
-
-            }
-
-            // Watch ui-refresh and refresh the directive
-            if (iAttrs.uiRefresh) {
-              scope.$watch(iAttrs.uiRefresh, function (newVal, oldVal) {
-                // Skip the initial watch firing
-                if (newVal !== oldVal) {
-                  codeMirror.refresh();
                 }
               });
             }
