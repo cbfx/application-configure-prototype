@@ -1,13 +1,14 @@
 angular.module('waldo.Blueprint')
-  .directive('blueprintTopology', function($window, Drag, Blueprint) {
+  .directive('blueprintTopology', function($window, Drag, Blueprint, $timeout) {
     return {
       restrict: 'E',
       replace: true,
       scope: {},
       controller: function($scope) {
         $scope.$on('blueprint:update', function(event, data) {
-          $scope.blueprint = angular.copy(data);
-          $scope.$apply();
+          $timeout(function() {
+            $scope.blueprint = angular.copy(data);
+          });
         });
 
         $window.addEventListener('resize', function () {
@@ -299,8 +300,8 @@ angular.module('waldo.Blueprint')
             var _service = {
               'components': d.components,
               'annotations': {
-                'gui-x': d.x,
-                'gui-y': d.y
+                'gui-x': Number(d.x.toFixed(3)),
+                'gui-y': Number(d.y.toFixed(3))
               }
             };
 
