@@ -32,6 +32,12 @@ var catalogData = {
                     "example": "example.com", 
                     "label": "Site's domain name"
                 }
+            },
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/apache-small.png",
+                    "tattoo": "/images/apache.png"
+                }
             }
         }, 
         "nginx": {
@@ -46,7 +52,13 @@ var catalogData = {
                 {
                     "web": "nginx"
                 }
-            ]
+            ],
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/nginx.png",
+                    "tattoo": "/images/nginx.png"
+                }
+            }
         }
     }, 
     "monitoring": {
@@ -68,7 +80,31 @@ var catalogData = {
                     "label": "New Relic license key"
                 }
             }, 
-            "id": "new-relic"
+            "id": "new-relic",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/newrelic.png",
+                    "tattoo": "/images/newrelic.png"
+                }
+            }
+        },
+        "rax-cloud-monitoring": {
+            "provides": [
+                {
+                    "monitoring": "rackspace"
+                }
+            ], 
+            "is": "monitoring", 
+            "requires": [], 
+            "options": {
+            }, 
+            "id": "rax-cloud-monitoring",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/icon-monitoring.svg",
+                    "tattoo": "/images/icon-monitoring.svg"
+                }
+            }
         }
     }, 
     "database": {
@@ -90,7 +126,13 @@ var catalogData = {
                     "label": "Listening port"
                 }
             }, 
-            "id": "mongodb"
+            "id": "mongodb",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/mongodb-icon-20x20.png",
+                    "tattoo": "/images/mongodb-tattoo.png"
+                }
+            }
         }, 
         "postgres": {
             "is": "database", 
@@ -104,7 +146,13 @@ var catalogData = {
                 {
                     "database": "postgres"
                 }
-            ]
+            ],
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/postgres-icon.png",
+                    "tattoo": "/images/postgre_sql_256.png"
+                }
+            }
         }, 
         "mysql": {
             "is": "database", 
@@ -134,6 +182,12 @@ var catalogData = {
                     "required": true, 
                     "type": "password"
                 }
+            },
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/mysql-small.png",
+                    "tattoo": "/images/mysql-tattoo.png"
+                }
             }
         }
     }, 
@@ -150,9 +204,15 @@ var catalogData = {
                 {
                     "cache": "varnish"
                 }
-            ]
+            ],
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/varnish.jpg",
+                    "tattoo": "/images/varnish.jpg"
+                }
+            }
         }, 
-        "memcache": {
+        "memcached": {
             "provides": [
                 {
                     "cache": "memcache"
@@ -175,7 +235,13 @@ var catalogData = {
                     "label": "Listening port"
                 }
             }, 
-            "id": "memcache"
+            "id": "memcached",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/memcached-icon-20x20.png",
+                    "tattoo": "/images/memcached-tattoo.png"
+                }
+            }
         }, 
         "redis": {
             "provides": [
@@ -195,7 +261,13 @@ var catalogData = {
                     "label": "Listening port"
                 }
             }, 
-            "id": "redis"
+            "id": "redis",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/redis-icon-20x20.png",
+                    "tattoo": "/images/redis-tattoo.png"
+                }
+            }
         }
     }, 
     "storage": {
@@ -211,7 +283,23 @@ var catalogData = {
                 {
                     "storage": "gluster"
                 }
-            ]
+            ],
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/glusterfs-icon-20x20.png",
+                    "tattoo": "/images/glusterfs-tattoo.png"
+                }
+            }
+        },
+        "rax-cloud-files": {
+            "is": "storage",
+            "id": "rax-cloud-files",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/icon-files.svg",
+                    "tattoo": "/images/icon-files.svg"
+                }
+            }
         }
     }, 
     "application": {
@@ -236,6 +324,58 @@ var catalogData = {
                 "packages": {
                     "type": "string", 
                     "label": "PHP Packages"
+                }
+            },
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/github.ico",
+                    "tattoo": "/images/github-tattoo.png"
+                }
+            }
+        }
+    },
+    "load-balancer": {
+        "rax:clb": {
+            "is": "load-balancer",
+            "id": "rax:clb",
+            "provides": [
+                {"load-balancer": "vip"},
+                {"load-balancer": "http"},
+                {"load-balancer": "https"}
+            ],
+            "requires": [
+                {"application": {"interface": "http"}}
+            ],
+            "options": {
+                "algorithm": {
+                    "type": "list",
+                    "choice": ["http", "https"]
+                },
+                "create_dns": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "allow_insecure": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/icon-load-balancers.svg",
+                    "tattoo": "/images/icon-load-balancers.svg"
+                }
+            }
+        }
+    },
+    "dns": {
+        "rax:dns": {
+            "is": "dns",
+            "id": "rax:dns",
+            "meta-data": {
+                "display-hints": {
+                    "icon-20x20": "/images/icon-dns.svg",
+                    "tattoo": "/images/icon-dns.svg"
                 }
             }
         }
