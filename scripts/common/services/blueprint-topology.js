@@ -1,10 +1,40 @@
 angular.module('waldo.Blueprint')
-  .directive('blueprintTopology', function($window, Drag, Blueprint) {
+  .directive('blueprintTopology', function($window, Drag, Blueprint, Catalog) {
     return {
       restrict: 'E',
       replace: true,
       scope: {},
       controller: function($scope) {
+        $scope.catalog = Catalog.get();
+
+        $scope.imageMap = {
+            icons: {},
+            tattoos: {}
+        }
+
+        $scope.getIcon = function(componentId) {
+            return $scope.imageMap.icons[componentId] || '';
+        };
+
+        $scope.getTattoo = function(componentId) {
+            return $scope.imageMap.tattoos[componentId] || '';
+        };
+
+        $scope.calculateIconMap = function() {
+            _.each($scope.catalog, function(components, type) {
+                _.each(components, function(component, id) {
+                    var dh = (component['meta-data'] || {})['display-hints'] || {};
+                    if (dh['icon-20x20']) {
+                        $scope.imageMap.icons[id] = dh['icon-20x20'];
+                    }
+                    if (dh['tattoo']) {
+                        $scope.imageMap.tattoos[id] = dh['tattoo'];
+                    }
+                });
+            })
+        };
+        $scope.calculateIconMap();
+
         $scope.$on('blueprint:update', function(event, data) {
           $scope.blueprint = angular.copy(data);
           $scope.$apply();
@@ -217,12 +247,7 @@ angular.module('waldo.Blueprint')
               return 'translate('+x+','+y+')';
             })
             .attr('xlink:href', function(d) {
-              // To Ziad: this will fail if there is no meta-info or display-hints... :(
-              if(d['meta-info']['display-hints']['icon-20x20']) {
-                return d['meta-info']['display-hints']['icon-20x20'];
-              }
-
-              return 'https://mdn.mozillademos.org/files/2917/fxlogo.png';
+              return scope.getTattoo(d);
             })
             .attr('class', 'component-icon');
 
