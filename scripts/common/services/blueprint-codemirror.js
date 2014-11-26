@@ -1,9 +1,9 @@
 angular.module('waldo.Blueprint')
-  .directive('blueprintCodemirror', function() {
+  .directive('blueprintCodemirror', function(Blueprint) {
     return {
       restrict: 'E',
       replace: true,
-      template: '<ui-codemirror ui-codemirror-opts="codemirror.options" ng-model="codemirror.data.bound"></ui-codemirror>',
+      template: '<ui-codemirror ui-codemirror-opts="codemirror.options" ng-model="codemirror.data.blueprint"></ui-codemirror>',
       controller: function($scope) {
 
         $scope.codemirror = {
@@ -15,27 +15,19 @@ angular.module('waldo.Blueprint')
             $scope.codemirror.editor = _editor;
           },
           data: {
-            original: undefined,
-            bound: '',
+            blueprint: undefined,
             toYAML: function() {
               $scope.codemirror.options.mode = 'yaml';
               $scope.codemirror.options.lint = typeof CodeMirror.lint.yaml !== 'undefined';
-              $scope.codemirror.data.bound = jsyaml.safeDump($scope.codemirror.data.original) || '';
               $scope.codemirror.options.onGutterClick = $scope.codemirror.indentFoldFunc;
             },
             toJSON: function() {
               $scope.codemirror.options.mode = 'json';
               $scope.codemirror.options.lint = typeof CodeMirror.lint.json !== 'undefined';
-              $scope.codemirror.data.bound = JSON.stringify($scope.codemirror.data.original, null, 2);
               $scope.codemirror.options.onGutterClick = $scope.codemirror.braceFoldFunc;
             }
           },
           onUpdate: function() {
-            if ($scope.codemirror.format === 'yaml') {
-              $scope.codemirror.data.toYAML();
-            } else {
-              $scope.codemirror.data.toJSON();
-            }
             if ($scope.codemirror.editor) {
               $scope.codemirror.editor.refresh();
               //$scope.codemirror.editor.eachLine(function(line){
@@ -43,12 +35,10 @@ angular.module('waldo.Blueprint')
               //    $scope.codemirror.indentFoldfunc($scope.codemirror.editor, $scope.codemirror.editor.getLineNumber(line));
               //  }
               //});
-              $scope.codemirror.options.lint = $scope.codemirror.data.bound.length > 0;
-
             }
           },
           setData: function(data) {
-            $scope.codemirror.data.original = data;
+            $scope.codemirror.data.blueprint = data;
             $scope.codemirror.onUpdate();
           },
           options: {
@@ -70,11 +60,19 @@ angular.module('waldo.Blueprint')
           }
         };
 
-        $scope.$on('blueprint:update', function(event, data) {
-          $scope.codemirror.setData(data);
-          $scope.$apply();
-          // console.log('[Blueprint codemirror]: blueprint broadcast caught in topology. we should render the topology.', data);
+        $scope.codemirror.data.toYAML();
+
+        $scope.$on('code:changed', function(event, data) {
+          Blueprint.set(data);
         });
+
+        $scope.$on('blueprint:update', function(event, data) {
+          if (data != $scope.codemirror.data.blueprint) {
+            $scope.codemirror.setData($.extend(true, {}, data));
+            $scope.$apply();
+          }
+        });
+
       }
     };
   });
