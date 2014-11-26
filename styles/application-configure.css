@@ -229,7 +229,25 @@
 .component-container {
   fill: #fff;
   stroke: #ccc;
-  stroke-width: 1
+  stroke-width: 1;
+}
+
+g.relation-linker:hover {
+  cursor: pointer;
+}
+g.relation-linker:hover circle.relation-link-container {
+  stroke: #ccc;
+  stroke-width: 1;
+}
+g.relation-linker text {
+  font-family: FontAwesome;
+  fill: #999;
+}
+g.relation-linker:hover text {
+  fill: #1abc9c;
+}
+g.relation-linker:hover circle.relation-link-container {
+  stroke: #1abc9c;
 }
 
 /* Code Mirror Overrides - blueprint-codemirror.css */
