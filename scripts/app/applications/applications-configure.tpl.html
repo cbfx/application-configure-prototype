@@ -19,6 +19,9 @@
                  ng-mousedown="select(config)"
                  ng-click="viewDetails()">
                 <div class="waldo-list-item-icon">
+                  <img ng-attr-src="{{meta-info['display-hints']['icon-20x20']}}"
+                  width="20"
+                  height="20">
                 </div> <!-- /.waldo-list-item-icon -->
                 <div class="waldo-list-item-title">
                   {{app}}
@@ -35,7 +38,7 @@
          x-on-drop="add()">
 
       <blueprint-topology></blueprint-topology>
-      <blueprint-codemirror ng-show="blueprint.services" 
+      <blueprint-codemirror ng-show="blueprint.services"
                             class="waldo-launch-sidebar align-right">
       </blueprint-codemirror>
 
