@@ -1,10 +1,18 @@
-angular.module('waldo.Blueprint', [
-  'ui.codemirror'
-]);
+var defaultBlueprint = {
+  name: 'PowerStack Demo',
+  version: '1.0.0',
+  services: {},
+  options: {},
+  'meta-data': {
+      'schema-version': 'v0.7',
+  }
+};
+
+angular.module('waldo.Blueprint', []);
 angular.module('waldo.Blueprint')
   .factory('Blueprint', function($rootScope) {
     return {
-      data: {},
+      data: window.defaultBlueprint,
       get: function() {
         return this.data;
       },

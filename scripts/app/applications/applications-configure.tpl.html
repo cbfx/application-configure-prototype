@@ -50,10 +50,10 @@
           <i class="fa fa-code fa-stack-1x" ng-class="{'fa-inverse': codemirror.isVisible}"></i>
         </span>
       </div>
-      <blueprint-codemirror ng-show="blueprint.services"
-                            class="waldo-launch-sidebar stick-right"
-                            ng-class="{'visible': codemirror.isVisible}">
-      </blueprint-codemirror>
+      <deployment-editor ng-show="blueprint.services"
+                         class="waldo-launch-sidebar stick-right"
+                         ng-class="{'visible': codemirror.isVisible}">
+      </deployment-editor>
 
       <div class="rs-table-overlay waldo-launch-empty-canvas" ng-hide="blueprint.services">
         <div class="rs-table-overlay-content">

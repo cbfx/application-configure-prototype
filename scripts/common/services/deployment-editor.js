@@ -1,13 +1,13 @@
-angular.module('waldo.Blueprint')
-  .directive('blueprintCodemirror', function(Blueprint, $timeout) {
+angular.module('waldo.Deployment')
+  .directive('deploymentEditor', function(Deployment, $timeout) {
     return {
       restrict: 'E',
       replace: true,
       scope: {},
-      template: '<ui-codemirror ui-codemirror-opts="options" ng-model="blueprint"></ui-codemirror>',
+      template: '<ui-codemirror ui-codemirror-opts="options" ng-model="deployment"></ui-codemirror>',
       controller: function($scope) {
 
-        $scope.blueprint = '';
+        $scope.deployment = '';
 
         $scope.options = {
           lint: false,
@@ -24,18 +24,18 @@ angular.module('waldo.Blueprint')
           onGutterClick: CodeMirror.newFoldFunction(CodeMirror.fold.indent),
           onLoad: function(_editor) {
             _editor.on("change", function(d) {
-              var blueprint = jsyaml.load(angular.copy($scope.blueprint));
-              Blueprint.set(blueprint);
+              var deployment = jsyaml.load(angular.copy($scope.deployment));
+              Deployment.set(deployment);
             });
           }
         };
 
-        $scope.$on('blueprint:update', function(event, data) {
+        $scope.$on('deployment:update', function(event, data) {
           var yamlData = jsyaml.safeDump(data);
 
-          if ($scope.blueprint != yamlData) {
+          if ($scope.deployment != yamlData) {
             $timeout(function() {
-              $scope.blueprint = yamlData;
+              $scope.deployment = yamlData;
             });
           }
         });
