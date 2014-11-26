@@ -4,7 +4,7 @@ angular.module('waldo.Deployment')
       restrict: 'E',
       replace: true,
       scope: {},
-      template: '<ui-codemirror ui-codemirror-opts="codemirror.options" ng-model="deployment"></ui-codemirror>',
+      template: '<waldo-codemirror waldo-codemirror-opts="codemirror.options" ng-model="deployment"></waldo-codemirror>',
       controller: function($scope) {
 
         $scope.deployment = '';

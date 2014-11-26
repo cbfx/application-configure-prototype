@@ -22,7 +22,7 @@ var defaultDeployment = {
 
 angular.module('waldo.Deployment', [
   'waldo.Blueprint',
-  'ui.codemirror'
+  'waldo.codemirror'
 ]);
 angular.module('waldo.Deployment')
   .factory('Deployment', function($rootScope, Blueprint){
