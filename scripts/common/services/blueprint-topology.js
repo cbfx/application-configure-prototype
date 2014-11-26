@@ -14,7 +14,7 @@ angular.module('waldo.Blueprint')
           $scope.$broadcast('window:resize');
         });
       },
-      template: '<svg class="blueprint-topology"></svg>',
+      template: '<svg class="blueprint-topology" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>',
       link: function(scope, element, attrs) {
         var parent = angular.element(element).parent()[0];
         var d3 = $window.d3;
@@ -28,7 +28,7 @@ angular.module('waldo.Blueprint')
               return 160;
             },
             height: function() {
-              return 150
+              return 160
             },
             margin: {
               top: 10,
@@ -205,6 +205,19 @@ angular.module('waldo.Blueprint')
               return sizes.service.margin.top;
             })
             .attr('class', 'component-container');
+
+          component.append('image')
+            .attr('fill', 'black')
+            .attr('width', sizes.component.width() - 50)
+            .attr('height', sizes.component.height() - 50)
+            .attr('transform', function(d, index) {
+              var x = sizes.service.margin.left + (sizes.component.width() * (index)) + 25;
+              var y = sizes.service.margin.top + 37;
+
+              return 'translate('+x+','+y+')';
+            })
+            .attr('xlink:href', 'https://mdn.mozillademos.org/files/2917/fxlogo.png')
+            .attr('class', 'component-icon');
 
           // This adds a component label.
           var label = component.append('text')
