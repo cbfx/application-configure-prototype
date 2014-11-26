@@ -1,5 +1,5 @@
 /* Application Container */
-.waldo-launch-container {
+.rs-app-launch-container {
   margin: 0;
   position: fixed;
   top: 120px;
@@ -10,37 +10,37 @@
 }
 
 /* Sidebar */
-.waldo-launch-sidebar {
+.rs-app-launch-sidebar {
   position: absolute;
   top: 0;
   bottom: 0;
   z-index: 800;
   transition: all 0.5s ease;
 }
-.waldo-launch-sidebar.stick-left {
+.rs-app-launch-sidebar.stick-left {
   left: -290px;
   width: 290px;
   background-color: rgba(255,255,255,1);
 }
-.waldo-launch-sidebar.stick-left.visible {
+.rs-app-launch-sidebar.stick-left.visible {
   left: 0;
 }
-.waldo-launch-sidebar.stick-right {
+.rs-app-launch-sidebar.stick-right {
   right: -320px;
   width: 320px;
   background-color: rgba(0,0,0,.8);
 }
-.waldo-launch-sidebar.stick-right.visible {
+.rs-app-launch-sidebar.stick-right.visible {
   right: 0;
 }
 
 /* Catalog Sidebar Header */
-.waldo-launch-header {
+.rs-app-launch-header {
   padding: 20px;
   position: relative;
 }
-.waldo-launch-search-bar {}
-.waldo-launch-search-bar input[type=text] {
+.rs-app-launch-search-bar {}
+.rs-app-launch-search-bar input[type=text] {
   width: 100%;
   font-size: 13px;
   height: 30px;
@@ -51,8 +51,8 @@
   box-shadow: none;
   border-color: rgba(100,100,100,.2);
 }
-.waldo-launch-search-bar input[type=text]:focus {}
-.waldo-launch-search-bar::after {
+.rs-app-launch-search-bar input[type=text]:focus {}
+.rs-app-launch-search-bar::after {
   font-family: "FontAwesome";
   content: "\f002";
   color: #ccc;
@@ -64,7 +64,7 @@
 }
 
 /* Catalog List */
-.waldo-launch-list-container {
+.rs-app-launch-list-container {
   border-top: 1px solid #eee;
   position: absolute;
   top: 70px;
@@ -73,15 +73,15 @@
   bottom: 0;
   overflow-y: scroll;
 }
-.waldo-launch-list-section {}
-.waldo-launch-list-section h4 {
+.rs-app-launch-list-section {}
+.rs-app-launch-list-section h4 {
   border-bottom: 1px solid #eee;
   padding: 0 20px;
   margin: 0;
   line-height: 25px;
   color: #c0c0c0;
 }
-.waldo-launch-list-item {
+.rs-app-launch-list-item {
   color: #666;
   padding: 5px 20px;
   display: block;
@@ -90,36 +90,36 @@
   cursor: pointer;
   border-bottom: 1px solid #eee;
 }
-.waldo-launch-list-item:hover {
+.rs-app-launch-list-item:hover {
   background-color: rgba(220,220,220,.2);
 }
-.waldo-list-item-icon,
-.waldo-list-item-title {
+.rs-app-list-item-icon,
+.rs-app-list-item-title {
   display: inline-block;
 }
-.waldo-list-item-title {
+.rs-app-list-item-title {
   font-size: 13px;
   line-height: 20px;
   color: #666;
   vertical-align: middle;
 }
-.waldo-list-item-icon {
+.rs-app-list-item-icon {
   font-size: 16px;
   margin-right: 10px;
   color: #e9e9e9;
   vertical-align: middle;
 }
-.waldo-list-item-icon img {
+.rs-app-list-item-icon img {
   vertical-align: top;
 }
-.waldo-list-item-icon i {
+.rs-app-list-item-icon i {
   border: 2px solid #eee;
   padding: 5px;
   border-radius: 4px;
 }
 
 /* Drag Canvas */
-.waldo-launch-empty-canvas {
+.rs-app-launch-empty-canvas {
   text-align: center;
   position: absolute;
   top: 50%;
@@ -129,16 +129,16 @@
   margin-left: -300px;
 }
 
-.waldo-launch-empty-title {
+.rs-app-launch-empty-title {
   font-size: 22px;
   color: #999;
   margin-bottom: 8px;
 }
-.waldo-launch-empty-subtitle {
+.rs-app-launch-empty-subtitle {
   font-size: 14px;
   color: #999;
 }
-.waldo-launch-empty-canvas .rs-table-overlay-content::before {
+.rs-app-launch-empty-canvas .rs-table-overlay-content::before {
   font-family: "FontAwesome";
   content: "\f047";
   font-size: 80px;
@@ -151,7 +151,7 @@
   opacity: .8;
 }
 
-.waldo-launch-topology {
+.rs-app-launch-topology {
   position: absolute;
   top: 0;
   right: 0;
@@ -162,7 +162,7 @@
 }
 
 /* Controls */
-.waldo-launch-controls {
+.rs-app-launch-controls {
   position: absolute;
   bottom: 0px;
   right: 0;
@@ -172,7 +172,7 @@
   transition: all 0.5s ease;
   z-index: 900;
 }
-.waldo-launch-controls.adjusted {
+.rs-app-launch-controls.adjusted {
   right: 320px;
 }
 .codemirror-toggle-button {
