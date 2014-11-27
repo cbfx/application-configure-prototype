@@ -25,9 +25,13 @@
 .rs-app-launch-sidebar.stick-left.visible {
   left: 0;
 }
+.rs-app-launch-sidebar.stick-left.dark {
+  background-color: rgba(40,40,40,1);
+  color: #fff;
+}
 .rs-app-launch-sidebar.stick-right {
-  right: -320px;
-  width: 320px;
+  right: -340px;
+  width: 340px;
   background-color: rgba(0,0,0,.8);
 }
 .rs-app-launch-sidebar.stick-right.visible {
@@ -38,6 +42,10 @@
 .rs-app-launch-header {
   padding: 20px;
   position: relative;
+}
+.rs-app-launch-header .rs-app-launch-title {
+  font-size: 19px;
+  font-weight: 200;
 }
 .rs-app-launch-search-bar {}
 .rs-app-launch-search-bar input[type=text] {
