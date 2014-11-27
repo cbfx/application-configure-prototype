@@ -36,10 +36,10 @@ angular.module('waldo.Blueprint')
         var sizes = {
           component: {
             width: function() {
-              return 160;
+              return 100;
             },
             height: function() {
-              return 160
+              return 100
             },
             margin: {
               top: 10,
