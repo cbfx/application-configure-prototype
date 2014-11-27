@@ -1,11 +1,10 @@
-'use strict';
-
 /**
 * Binds a CodeMirror widget to a <textarea> element.
 */
-angular.module('ui.codemirror', [])
-.constant('uiCodemirrorConfig', {})
-.directive('uiCodemirror', ['uiCodemirrorConfig', function (uiCodemirrorConfig) {
+angular.module('waldo.codemirror', [])
+.constant('waldoCodemirrorConfig', {})
+.directive('waldoCodemirror', ['waldoCodemirrorConfig', function (waldoCodemirrorConfig) {
+  'use strict';
 
   return {
     restrict: 'EA',
@@ -15,7 +14,7 @@ angular.module('ui.codemirror', [])
 
       // Require CodeMirror
       if (angular.isUndefined(window.CodeMirror)) {
-        throw new Error('ui-codemirror need CodeMirror to work... (o rly?)');
+        throw new Error('waldo-codemirror needs CodeMirror to work...');
       }
 
       var events = ["cursorActivity", "viewportChange", "gutterClick", "focus", "blur", "scroll", "update"];
@@ -27,8 +26,8 @@ angular.module('ui.codemirror', [])
 
         initialTextValue = iElement.text();
 
-        options = uiCodemirrorConfig.codemirror || {};
-        opts = angular.extend({ value: initialTextValue }, options, scope.$eval(iAttrs.uiCodemirror), scope.$eval(iAttrs.uiCodemirrorOpts));
+        options = waldoCodemirrorConfig.codemirror || {};
+        opts = angular.extend({ value: initialTextValue }, options, scope.$eval(iAttrs.waldoCodemirror), scope.$eval(iAttrs.waldoCodemirrorOpts));
 
         if (iElement[0].tagName === 'TEXTAREA') {
           // Might bug but still ...
@@ -40,9 +39,9 @@ angular.module('ui.codemirror', [])
           }, opts);
         }
 
-        if (iAttrs.uiCodemirror || iAttrs.uiCodemirrorOpts) {
+        if (iAttrs.waldoCodemirror || iAttrs.waldoCodemirrorOpts) {
           var codemirrorDefaultsKeys = Object.keys(window.CodeMirror.defaults);
-          scope.$watch(iAttrs.uiCodemirror || iAttrs.uiCodemirrorOpts, function updateOptions(newValues, oldValue) {
+          scope.$watch(iAttrs.waldoCodemirror || iAttrs.waldoCodemirrorOpts, function updateOptions(newValues, oldValue) {
             if (! angular.isObject(newValues)){
               return;
             }
@@ -77,7 +76,7 @@ angular.module('ui.codemirror', [])
             if (angular.isUndefined(value) || value === null) {
               return '';
             } else if (angular.isObject(value) || angular.isArray(value)) {
-              throw new Error('ui-codemirror cannot use an object or an array as a model');
+              throw new Error('waldo-codemirror cannot use an object or an array as a model');
             }
             return value;
           });
@@ -90,6 +89,7 @@ angular.module('ui.codemirror', [])
             //Although the formatter have already done this, it can be possible that another formatter returns undefined (for example the required directive)
             var safeViewValue = ngModel.$viewValue || '';
             codeMirror.setValue(safeViewValue);
+            scope.$emit('editor:refreshed', codeMirror, safeViewValue);
           };
 
 
