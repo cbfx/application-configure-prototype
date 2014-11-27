@@ -33,6 +33,24 @@
       </div> <!-- /.rs-app-launch-list-container -->
     </div> <!-- /.rs-app-launch-sidebar -->
 
+    <div class="rs-app-launch-sidebar stick-left dark" ng-class="{'visible': selection.isVisible}">
+      <header class="rs-app-launch-header">
+        <div class="rs-app-launch-title">
+          Header Title
+        </div> <!-- /.rs-app-launch-input.rs-app-launch-search-bar -->
+        <div class="rs-app-launch-control">
+          <i class="fa fa-close fa-inverse" ng-click="selection.isVisible = false"></i>
+        </div> <!-- /.rs-app-launch-input.rs-app-launch-search-bar -->
+      </header> <!-- /.rs-app-launch-header -->
+      <section class="rs-app-launch-list-section">
+        Deployments:
+        {{deployment.blueprint.services[selection.data.service]}}
+        <hr />
+        Catalog:
+        {{catalog.components[selection.data.component]}}
+      </section> <!-- /.rs-app-launch-list-section -->
+    </div> <!-- /.rs-app-launch-sidebar -->
+
     <div class="rs-app-launch-topology"
          x-lvl-drop-target="true"
          x-on-drop="add()">
@@ -43,19 +61,19 @@
       <!-- Code Mirror -->
       <div class="codemirror-toggle-button"
            ng-class="{'adjusted': codemirror.isVisible}"
-           ng-show="blueprint.services"
+           ng-show="deployment.blueprint.services"
            ng-click="codemirror.isVisible = !codemirror.isVisible">
         <span class="fa-stack fa-lg">
           <i class="fa fa-ban fa-stack-2x text-danger" ng-show="codemirror.isVisible"></i>
           <i class="fa fa-code fa-stack-1x" ng-class="{'fa-inverse': codemirror.isVisible}"></i>
         </span>
       </div>
-      <deployment-editor ng-show="blueprint.services"
+      <deployment-editor ng-show="deployment.blueprint.services"
                          class="rs-app-launch-sidebar stick-right"
                          ng-class="{'visible': codemirror.isVisible}">
       </deployment-editor>
 
-      <div class="rs-table-overlay rs-app-launch-empty-canvas" ng-hide="blueprint.services">
+      <div class="rs-table-overlay rs-app-launch-empty-canvas" ng-hide="deployment.blueprint.services">
         <div class="rs-table-overlay-content">
           <div class="rs-table-overlay-title">You don't have any applications yet.</div>
           <div class="rs-table-overlay-subtitle">Add one now.</div>

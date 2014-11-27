@@ -7,33 +7,13 @@ angular.module('waldo.Blueprint')
       controller: function($scope) {
         $scope.catalog = Catalog.get();
 
-        $scope.imageMap = {
-            icons: {},
-            tattoos: {}
-        };
-
-        $scope.getIcon = function(componentId) {
-            return $scope.imageMap.icons[componentId] || '';
-        };
-
         $scope.getTattoo = function(componentId) {
-            return $scope.imageMap.tattoos[componentId] || '';
+          return (((Catalog.getComponent(componentId) || {})['meta-data'] || {})['display-hints'] || {})['tattoo'] || '';
         };
 
-        $scope.calculateIconMap = function() {
-            _.each($scope.catalog, function(components, type) {
-                _.each(components, function(component, id) {
-                    var dh = (component['meta-data'] || {})['display-hints'] || {};
-                    if (dh['icon-20x20']) {
-                        $scope.imageMap.icons[id] = dh['icon-20x20'];
-                    }
-                    if (dh['tattoo']) {
-                        $scope.imageMap.tattoos[id] = dh['tattoo'];
-                    }
-                });
-            })
+        $scope.select = function(selection) {
+          $scope.$emit('topology:select', selection);
         };
-        $scope.calculateIconMap();
 
         $scope.$on('blueprint:update', function(event, data) {
           $timeout(function() {
@@ -175,7 +155,7 @@ angular.module('waldo.Blueprint')
                 d.y = d.annotations['gui-y'] || mouse[1];
 
                 return "translate(" + d.x + "," + d.y + ")"
-              })
+              });
 
           // This defines service drag events.
           service.on("dragover", function(d) {
@@ -224,7 +204,20 @@ angular.module('waldo.Blueprint')
               })
             .enter()
               .append("g")
-                .attr('class', 'component');
+                .attr('class', 'component')
+                .on('click', function(d) {
+                  if(d3.event.defaultPrevented) {
+                    return;
+                  }
+
+                  var data = {
+                    service: d3.select(this.parentNode).datum()._id,
+                    component: d,
+                    relation: null
+                  };
+
+                  scope.select(data);
+                });
 
           component.append('rect')
             .attr('width', sizes.component.width())
@@ -324,7 +317,7 @@ angular.module('waldo.Blueprint')
 
         function dragstarted(d) {
           d3.event.sourceEvent.stopPropagation();
-          d3.select(this).classed("dragging", true);
+          d3.select(this).classed("dragging dragged", true);
         }
 
         function dragged(d) {
@@ -334,6 +327,7 @@ angular.module('waldo.Blueprint')
         }
 
         function dragended(d) {
+          d3.event.sourceEvent.stopPropagation();
           d3.select(this).classed("dragging", false);
           save();
         }

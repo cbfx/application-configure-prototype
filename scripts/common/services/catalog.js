@@ -5,31 +5,31 @@ var catalogData = {
                 {
                     "host": "linux"
                 }
-            ], 
-            "is": "web", 
-            "id": "apache", 
+            ],
+            "is": "web",
+            "id": "apache",
             "provides": [
                 {
                     "web": "apache"
                 }
-            ], 
+            ],
             "options": {
                 "server_alias": {
-                    "type": "array", 
+                    "type": "array",
                     "example": [
-                        "www.example.com", 
+                        "www.example.com",
                         "blog.example.com"
-                    ], 
+                    ],
                     "label": "Additional domain names to respond on"
-                }, 
+                },
                 "port": {
-                    "default": 80, 
-                    "type": "integer", 
+                    "default": 80,
+                    "type": "integer",
                     "label": "Listening port"
-                }, 
+                },
                 "server_name": {
-                    "type": "string", 
-                    "example": "example.com", 
+                    "type": "string",
+                    "example": "example.com",
                     "label": "Site's domain name"
                 }
             },
@@ -39,15 +39,15 @@ var catalogData = {
                     "tattoo": "/images/apache.png"
                 }
             }
-        }, 
+        },
         "nginx": {
-            "is": "web", 
+            "is": "web",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
-            "id": "nginx", 
+            ],
+            "id": "nginx",
             "provides": [
                 {
                     "web": "nginx"
@@ -60,26 +60,26 @@ var catalogData = {
                 }
             }
         }
-    }, 
+    },
     "monitoring": {
         "new-relic": {
             "provides": [
                 {
                     "monitoring": "new-relic"
                 }
-            ], 
-            "is": "monitoring", 
+            ],
+            "is": "monitoring",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
+            ],
             "options": {
                 "license": {
-                    "type": "string", 
+                    "type": "string",
                     "label": "New Relic license key"
                 }
-            }, 
+            },
             "id": "new-relic",
             "meta-data": {
                 "display-hints": {
@@ -93,11 +93,11 @@ var catalogData = {
                 {
                     "monitoring": "rackspace"
                 }
-            ], 
-            "is": "monitoring", 
-            "requires": [], 
+            ],
+            "is": "monitoring",
+            "requires": [],
             "options": {
-            }, 
+            },
             "id": "rax-cloud-monitoring",
             "meta-data": {
                 "display-hints": {
@@ -106,26 +106,26 @@ var catalogData = {
                 }
             }
         }
-    }, 
+    },
     "database": {
         "mongodb": {
             "provides": [
                 {
                     "database": "mongodb"
                 }
-            ], 
-            "is": "database", 
+            ],
+            "is": "database",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
+            ],
             "options": {
                 "port": {
-                    "type": "integer", 
+                    "type": "integer",
                     "label": "Listening port"
                 }
-            }, 
+            },
             "id": "mongodb",
             "meta-data": {
                 "display-hints": {
@@ -133,15 +133,15 @@ var catalogData = {
                     "tattoo": "/images/mongodb-tattoo.png"
                 }
             }
-        }, 
+        },
         "postgres": {
-            "is": "database", 
+            "is": "database",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
-            "id": "postgres", 
+            ],
+            "id": "postgres",
             "provides": [
                 {
                     "database": "postgres"
@@ -153,33 +153,33 @@ var catalogData = {
                     "tattoo": "/images/postgre_sql_256.png"
                 }
             }
-        }, 
+        },
         "mysql": {
-            "is": "database", 
-            "id": "mysql", 
+            "is": "database",
+            "id": "mysql",
             "provides": [
                 {
                     "database": "mysql"
                 }
-            ], 
+            ],
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
+            ],
             "options": {
                 "server_root_password": {
-                    "default": "=generate_password(min_length=12, required_chars=[\"0123456789\", \"abcdefghijklmnopqrstuvwxyz\", \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"])", 
-                    "required": true, 
+                    "default": "=generate_password(min_length=12, required_chars=[\"0123456789\", \"abcdefghijklmnopqrstuvwxyz\", \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"])",
+                    "required": true,
                     "type": "password"
-                }, 
+                },
                 "username": {
-                    "default": "root", 
+                    "default": "root",
                     "required": true
-                }, 
+                },
                 "password": {
-                    "default": "=generate_password(min_length=12, required_chars=[\"0123456789\", \"abcdefghijklmnopqrstuvwxyz\", \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"])", 
-                    "required": true, 
+                    "default": "=generate_password(min_length=12, required_chars=[\"0123456789\", \"abcdefghijklmnopqrstuvwxyz\", \"ABCDEFGHIJKLMNOPQRSTUVWXYZ\"])",
+                    "required": true,
                     "type": "password"
                 }
             },
@@ -190,16 +190,16 @@ var catalogData = {
                 }
             }
         }
-    }, 
+    },
     "cache": {
         "varnish": {
-            "is": "cache", 
+            "is": "cache",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
-            "id": "varnish", 
+            ],
+            "id": "varnish",
             "provides": [
                 {
                     "cache": "varnish"
@@ -211,30 +211,30 @@ var catalogData = {
                     "tattoo": "/images/varnish.jpg"
                 }
             }
-        }, 
+        },
         "memcached": {
             "provides": [
                 {
                     "cache": "memcache"
                 }
-            ], 
-            "is": "cache", 
+            ],
+            "is": "cache",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
+            ],
             "options": {
                 "monitoring": {
-                    "default": false, 
-                    "type": "boolean", 
+                    "default": false,
+                    "type": "boolean",
                     "label": "Enable monitoring"
-                }, 
+                },
                 "port": {
-                    "type": "integer", 
+                    "type": "integer",
                     "label": "Listening port"
                 }
-            }, 
+            },
             "id": "memcached",
             "meta-data": {
                 "display-hints": {
@@ -242,25 +242,25 @@ var catalogData = {
                     "tattoo": "/images/memcached-tattoo.png"
                 }
             }
-        }, 
+        },
         "redis": {
             "provides": [
                 {
                     "cache": "redis"
                 }
-            ], 
-            "is": "cache", 
+            ],
+            "is": "cache",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
+            ],
             "options": {
                 "port": {
-                    "type": "integer", 
+                    "type": "integer",
                     "label": "Listening port"
                 }
-            }, 
+            },
             "id": "redis",
             "meta-data": {
                 "display-hints": {
@@ -269,16 +269,16 @@ var catalogData = {
                 }
             }
         }
-    }, 
+    },
     "storage": {
         "gluster": {
-            "is": "storage", 
+            "is": "storage",
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
-            "id": "gluster", 
+            ],
+            "id": "gluster",
             "provides": [
                 {
                     "storage": "gluster"
@@ -301,28 +301,28 @@ var catalogData = {
                 }
             }
         }
-    }, 
+    },
     "application": {
         "app": {
-            "is": "application", 
-            "id": "app", 
+            "is": "application",
+            "id": "app",
             "provides": [
                 {
                     "application": "http"
                 }
-            ], 
+            ],
             "requires": [
                 {
                     "host": "linux"
                 }
-            ], 
+            ],
             "options": {
                 "demo": {
-                    "type": "boolean", 
+                    "type": "boolean",
                     "label": "Enable Demo"
-                }, 
+                },
                 "packages": {
-                    "type": "string", 
+                    "type": "string",
                     "label": "PHP Packages"
                 }
             },
@@ -384,11 +384,40 @@ var catalogData = {
 
 angular.module('waldo.Catalog', []);
 angular.module('waldo.Catalog')
-  .factory('Catalog', function(){
-    return {
-      data: {},
-      get: function() {
-        return window.catalogData;
-      }
+  .factory('Catalog', function() {
+    var Catalog = {
+      'data': {},
+      'components': {}
     };
+
+    Catalog.get = function() {
+      return this.data;
+    };
+
+    Catalog.set = function(data) {
+      var components = {};
+
+      // This sets the component map.
+      angular.forEach(data, function(_components, _service) {
+        angular.forEach(_components, function(_component) {
+          components[_component.id] = _component;
+        });
+      });
+
+      this.components = angular.extend(this.components, components);
+      this.data = data;
+    };
+
+    Catalog.getComponents = function() {
+      return this.components;
+    };
+
+    Catalog.getComponent = function(name) {
+      return this.components[name];
+    };
+
+    Catalog.set(window.catalogData);
+
+    return Catalog;
+
   });

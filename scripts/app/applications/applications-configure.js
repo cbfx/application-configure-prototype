@@ -10,7 +10,6 @@ angular.module('applications-configure')
   .controller('ConfigureCtrl', function($scope, Deployment, Blueprint, Catalog, Drag, $timeout) {
 
     $scope.deployment = Deployment.get();
-    $scope.blueprint = $scope.deployment.blueprint;
 
     // This selects the object being sent to the Blueprint.
     $scope.select = function(app) {
@@ -27,12 +26,22 @@ angular.module('applications-configure')
     };
 
     // This could toggle an extra sidebar to reveal details about a service.
-    $scope.viewDetails = function() {};
+    $scope.selection = {
+      'data': {},
+      'isVisible': false,
+      save: function(component) {
+        Blueprint.update($scope.deployment.blueprint);
+      },
+      close: function() {
+        this.isVisible = false;
+      }
+    };
 
     // This is the catalog model for the sidebar.
     $scope.catalog = {
       'isVisible': false,
-      'data': Catalog.get()
+      'data': Catalog.get(),
+      'components': Catalog.getComponents()
     };
 
     // This is the codemirror model for the sidebar.
@@ -47,6 +56,10 @@ angular.module('applications-configure')
       }
 
       $scope.deployment = data;
-      $scope.blueprint = data.blueprint;
+    });
+
+    $scope.$on('topology:select', function(event, selection) {
+      $scope.selection.isVisible = true;
+      $scope.selection.data = selection;
     });
   });
