@@ -37,7 +37,7 @@ angular.module('waldo.Deployment')
         };
 
         $scope.codemirror.options = {
-          lint: false,
+          lint: typeof CodeMirror.lint.yaml !== 'undefined',
           mode: 'yaml',
           theme: 'lesser-dark',
           lineNumbers: true,
