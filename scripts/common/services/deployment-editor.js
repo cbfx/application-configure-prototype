@@ -8,6 +8,8 @@ angular.module('waldo.Deployment')
       controller: function($scope) {
 
         $scope.deployment = '';
+        $scope.valid = true; // Is the YAML valid?
+        $scope.dirty = false; // Out of sync with topology
 
         $scope.codemirror = {
           editor: null,
@@ -37,7 +39,7 @@ angular.module('waldo.Deployment')
         };
 
         $scope.codemirror.options = {
-          lint: false,
+          lint: typeof CodeMirror.lint.yaml !== 'undefined',
           mode: 'yaml',
           theme: 'lesser-dark',
           lineNumbers: true,
@@ -52,11 +54,17 @@ angular.module('waldo.Deployment')
             $scope.codemirror.markAltered();
             return $scope.codemirror.foldFunction(editor, start);
           },
-          onLoad: function(editor) {
-            $scope.codemirror.editor = editor;
-            editor.on("change", function(d) {
-              var deployment = jsyaml.load(angular.copy($scope.deployment));
-              Deployment.set(deployment);
+          onLoad: function(_editor) {
+            _editor.on("change", function(d) {
+              try {
+                var deployment = jsyaml.load($scope.deployment);
+                $scope.valid = true;
+                Deployment.set(deployment);
+                $scope.dirty = false;
+              } catch(err) {
+                $scope.valid = false;
+                $scope.dirty = true;
+              }
             });
           },
           onFocus: $scope.codemirror.markAltered
@@ -67,6 +75,11 @@ angular.module('waldo.Deployment')
         });
 
         $scope.$on('deployment:update', function(event, data) {
+          if ($scope.dirty) {
+            $scope.$emit('editor:outOfSync');
+            console.log('Editor out of sync with topology. TODO: handle better');
+            return;
+          }
           var yamlData = jsyaml.safeDump(data);
 
           if ($scope.deployment != yamlData) {
