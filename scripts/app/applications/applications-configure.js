@@ -59,7 +59,17 @@ angular.module('applications-configure')
     });
 
     $scope.$on('topology:select', function(event, selection) {
-      $scope.selection.isVisible = true;
       $scope.selection.data = selection;
+      if (selection) {
+        $scope.selection.isVisible = true;
+      } else {
+        $scope.selection.isVisible = false;
+        $scope.$apply(); // No idea why, but this is needed to hide the properties drawer
+      }
+    });
+
+    $scope.$on('topology:deselect', function(event, selection) {
+      $scope.selection.data = selection;
+      $scope.selection.isVisible = false;
     });
   });

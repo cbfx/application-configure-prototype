@@ -240,6 +240,13 @@
   stroke-width: 1;
 }
 
+g.selected > .service-container,
+g.selected > .component-container {
+  stroke-width: 4px;
+  stroke: #aaa;
+  stroke-dasharray: 8;
+}
+
 g.relation-linker:hover {
   cursor: pointer;
 }

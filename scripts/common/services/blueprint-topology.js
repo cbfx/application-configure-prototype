@@ -15,6 +15,10 @@ angular.module('waldo.Blueprint')
           $scope.$emit('topology:select', selection);
         };
 
+        $scope.deselect = function(selection) {
+          $scope.$emit('topology:deselect', selection);
+        };
+
         $scope.$on('blueprint:update', function(event, data) {
           $timeout(function() {
             $scope.blueprint = angular.copy(data);
@@ -92,9 +96,28 @@ angular.module('waldo.Blueprint')
 
         var svg = d3.select(element[0]);
 
+        function toggleSelect(el, data) {
+          if (el.classed('selected')) {
+            el.classed('selected', false);
+            scope.deselect(data);
+          } else {
+            svg.selectAll('.selected').classed('selected', false);
+            el.classed('selected', true);
+            scope.select(data);
+          }
+        }
+
         var zoomer = svg.append("g")
             .attr("transform", "translate(0,0)")
-            .call(zoom);
+            .call(zoom)
+            .attr('class', 'zoomer')
+            .on('click', function(d) {
+              if(d3.event.defaultPrevented) {
+                return;
+              }
+              console.log("CANVAS");
+              toggleSelect(d3.select(this), null);
+            });
 
         var rect = zoomer.append("rect")
             .style("fill", "none")
@@ -155,6 +178,21 @@ angular.module('waldo.Blueprint')
                 d.y = d.annotations['gui-y'] || mouse[1];
 
                 return "translate(" + d.x + "," + d.y + ")"
+              })
+              .on('click', function(d) {
+                if(d3.event.defaultPrevented) {
+                  return;
+                }
+                console.log('SERVICE', d._id);
+
+                var data = {
+                  service: d._id,
+                  component: null,
+                  relation: null
+                };
+
+                toggleSelect(d3.select(this), data);
+                d3.event.stopPropagation();
               });
 
           // This defines service drag events.
@@ -216,7 +254,8 @@ angular.module('waldo.Blueprint')
                     relation: null
                   };
 
-                  scope.select(data);
+                  toggleSelect(d3.select(this), data);
+                  d3.event.stopPropagation();
                 });
 
           component.append('rect')
@@ -246,7 +285,22 @@ angular.module('waldo.Blueprint')
             .attr('class', 'component-icon');
 
           var linker = component.append('g')
-            .attr('class', 'relation-linker');
+            .attr('class', 'relation-linker')
+            .on('click', function(d) {
+              if(d3.event.defaultPrevented) {
+                return;
+              }
+              console.log('LINKER', d);
+
+              var data = {
+                service: d3.select(this.parentNode).datum()._id,
+                component: d,
+                relation: null
+              };
+
+              toggleSelect(d3.select(this), data);
+              d3.event.stopPropagation();
+            });
 
           linker.append('circle')
             .attr('r', 12)
