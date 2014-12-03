@@ -8,7 +8,7 @@ angular.module('waldo.Blueprint')
         $scope.catalog = Catalog.get();
 
         $scope.getTattoo = function(componentId) {
-          return (((Catalog.getComponent(componentId) || {})['meta-data'] || {})['display-hints'] || {})['tattoo'] || '';
+          return (((Catalog.getComponent(componentId) || {})['meta-data'] || {})['display-hints'] || {}).tattoo || '';
         };
 
         $scope.select = function(selection) {
@@ -43,7 +43,7 @@ angular.module('waldo.Blueprint')
               return 160;
             },
             height: function() {
-              return 160
+              return 160;
             },
             margin: {
               top: 10,
@@ -90,7 +90,7 @@ angular.module('waldo.Blueprint')
         };
 
         var zoom = d3.behavior.zoom()
-            .scaleExtent([.6, 7])
+            .scaleExtent([0.2, 3])
             .on("zoom", zoomed);
 
         var drag = d3.behavior.drag()
@@ -211,10 +211,12 @@ angular.module('waldo.Blueprint')
                 return d._id + '-service';
               })
               .attr("transform", function(d) {
-                d.x = d.annotations['gui-x'] || mouse[0];
-                d.y = d.annotations['gui-y'] || mouse[1];
+                var annotations = d.annotations || {};
+                var safeMouse = mouse || [100, 100];
+                d.x = annotations['gui-x'] || safeMouse[0];
+                d.y = annotations['gui-y'] || safeMouse[1];
 
-                return "translate(" + d.x + "," + d.y + ")"
+                return "translate(" + d.x + "," + d.y + ")";
               })
               .on('click', function(d) {
                 if(d3.event.defaultPrevented) {
@@ -526,8 +528,8 @@ angular.module('waldo.Blueprint')
 
             // This adds annotations property.
             _service.annotations = {
-              'gui-x': Number(d.x.toFixed(3)),
-              'gui-y': Number(d.y.toFixed(3))
+              'gui-x': Number((d.x || 100).toFixed(3)),
+              'gui-y': Number((d.y || 100).toFixed(3))
             };
 
             // This extends any current

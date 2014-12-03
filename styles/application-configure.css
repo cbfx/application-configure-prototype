@@ -302,3 +302,9 @@ path.linker {
 .cm-s-lesser-dark .CodeMirror-gutters {
   border-right: 1px solid #555;
 }
+
+span.CodeMirror-foldmarker {
+  color: rgb(188, 188, 194);
+  text-shadow: none;
+}
+
