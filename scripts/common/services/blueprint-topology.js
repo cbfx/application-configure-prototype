@@ -450,7 +450,7 @@ angular.module('waldo.Blueprint')
 
         function linkstarted(d) {
           state.linking = true;
-          dragConnectorLine = container.append('path')
+          dragConnectorLine = svg.append('path')
               .style("pointer-events", "none")
               .attr('class', 'linker dragline')
               .attr('d', 'M0,0L0,0');
