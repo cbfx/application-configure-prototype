@@ -259,10 +259,30 @@ g.relation-linker text {
   fill: #999;
 }
 g.relation-linker:hover text {
-  fill: #1abc9c;
+  fill: #2980b9;
 }
 g.relation-linker:hover circle.relation-link-container {
+  stroke: #2980b9;
+}
+
+g.relation-linker.dragging circle {
   stroke: #1abc9c;
+}
+
+g.relation-linker.target circle {
+  stroke: #1abc9c;
+}
+
+g.relation-linker.target.unsuitable circle {
+  stroke: #c0392b;
+}
+
+
+path.linker {
+    fill: none;
+    stroke: #95a5a6;
+    stroke-width: 2px;
+    cursor: default;
 }
 
 /* Code Mirror Overrides - blueprint-codemirror.css */

@@ -1,6 +1,6 @@
 angular.module('waldo.Drag', []);
 angular.module('waldo.Drag')
-  .factory('Drag', function() {  
+  .factory('Drag', function() {
     return {
       reset: function() {
         this.target.data = null;
@@ -16,6 +16,15 @@ angular.module('waldo.Drag')
         }
       },
       current: {
+        data: null,
+        get: function() {
+          return this.data;
+        },
+        set: function(data) {
+          this.data = data;
+        }
+      },
+      source: {
         data: null,
         get: function() {
           return this.data;

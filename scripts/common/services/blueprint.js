@@ -40,6 +40,21 @@ angular.module('waldo.Blueprint')
 
         this.broadcast();
       },
+      canConnect: function(from, target, protocol, optionalTag) {
+        var fromServiceId = from.serviceId,
+            fromComponentId = from.componentId;
+        var targetServiceId = target.serviceId,
+            targetComponentId = target.componentId;
+        if (!(fromServiceId in this.data.services)) {
+          return false;
+        }
+        if (!(targetServiceId in this.data.services)) {
+          return false;
+        }
+        var fromService = this.data.services[fromServiceId];
+        var targetService = this.data.services[targetServiceId];
+        return true;
+      },
       connect: function(fromServiceId, toServiceId, protocol, optionalTag) {
         var fromService = this.data.services[fromServiceId];
         if (!angular.isArray(fromService.relations)) {
