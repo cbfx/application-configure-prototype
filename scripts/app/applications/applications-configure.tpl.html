@@ -36,7 +36,7 @@
     <div class="rs-app-launch-sidebar stick-left dark" ng-class="{'visible': selection.isVisible}">
       <header class="rs-app-launch-header">
         <div class="rs-app-launch-title">
-          Header Title
+          {{ selection.data.service }}\{{ selection.data.component }}
         </div> <!-- /.rs-app-launch-input.rs-app-launch-search-bar -->
         <div class="rs-app-launch-control">
           <i class="fa fa-close fa-inverse" ng-click="selection.isVisible = false"></i>

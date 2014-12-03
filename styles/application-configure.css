@@ -240,6 +240,13 @@
   stroke-width: 1;
 }
 
+g.selected > .service-container,
+g.selected > .component-container {
+  stroke-width: 4px;
+  stroke: #aaa;
+  stroke-dasharray: 8;
+}
+
 g.relation-linker:hover {
   cursor: pointer;
 }
@@ -252,10 +259,30 @@ g.relation-linker text {
   fill: #999;
 }
 g.relation-linker:hover text {
-  fill: #1abc9c;
+  fill: #2980b9;
 }
 g.relation-linker:hover circle.relation-link-container {
+  stroke: #2980b9;
+}
+
+g.relation-linker.dragging circle {
   stroke: #1abc9c;
+}
+
+g.relation-linker.target circle {
+  stroke: #1abc9c;
+}
+
+g.relation-linker.target.unsuitable circle {
+  stroke: #c0392b;
+}
+
+
+path.linker {
+    fill: none;
+    stroke: #95a5a6;
+    stroke-width: 2px;
+    cursor: default;
 }
 
 /* Code Mirror Overrides - blueprint-codemirror.css */
@@ -275,3 +302,9 @@ g.relation-linker:hover circle.relation-link-container {
 .cm-s-lesser-dark .CodeMirror-gutters {
   border-right: 1px solid #555;
 }
+
+span.CodeMirror-foldmarker {
+  color: rgb(188, 188, 194);
+  text-shadow: none;
+}
+

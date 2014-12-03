@@ -27,8 +27,8 @@ angular.module('applications-configure')
 
     // This could toggle an extra sidebar to reveal details about a service.
     $scope.selection = {
-      'data': {},
-      'isVisible': false,
+      data: {},
+      isVisible: false,
       save: function(component) {
         Blueprint.update($scope.deployment.blueprint);
       },
@@ -39,9 +39,9 @@ angular.module('applications-configure')
 
     // This is the catalog model for the sidebar.
     $scope.catalog = {
-      'isVisible': false,
-      'data': Catalog.get(),
-      'components': Catalog.getComponents()
+      isVisible: false,
+      data: Catalog.get(),
+      components: Catalog.getComponents()
     };
 
     // This is the codemirror model for the sidebar.
@@ -59,7 +59,17 @@ angular.module('applications-configure')
     });
 
     $scope.$on('topology:select', function(event, selection) {
-      $scope.selection.isVisible = true;
       $scope.selection.data = selection;
+      if (selection) {
+        $scope.selection.isVisible = true;
+      } else {
+        $scope.selection.isVisible = false;
+        $scope.$apply(); // No idea why, but this is needed to hide the properties drawer
+      }
+    });
+
+    $scope.$on('topology:deselect', function(event, selection) {
+      $scope.selection.data = selection;
+      $scope.selection.isVisible = false;
     });
   });

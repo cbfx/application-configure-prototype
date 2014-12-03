@@ -76,7 +76,7 @@ angular.module('waldo.Deployment')
 
         $scope.$on('deployment:update', function(event, data) {
           if ($scope.dirty) {
-            $scope.$emit('editor:outOfSync');
+            $scope.$emit('editor:out_of_sync');
             console.log('Editor out of sync with topology. TODO: handle better');
             return;
           }
